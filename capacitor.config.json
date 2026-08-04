@@ -1,0 +1,6 @@
+{
+  "appId": "com.gaska.drivermanagement",
+  "appName": "Driver Management",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}

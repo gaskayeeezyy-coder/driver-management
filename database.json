@@ -1,0 +1,802 @@
+{
+  "target": 400000,
+  "transactions": [
+    {
+      "id": 1785762989882,
+      "type": "out",
+      "category": "Makan",
+      "amount": 13000,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0,
+      "accountId": "acc_cash",
+      "tipAmount": 0
+    },
+    {
+      "id": 1785762962707,
+      "type": "out",
+      "category": "Makan",
+      "amount": 16000,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "20.16",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0,
+      "accountId": "acc_1785692473083"
+    },
+    {
+      "id": 1785762948561,
+      "type": "transfer",
+      "category": "Transfer: Digital Grab ➜ OVO",
+      "amount": 154000,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "20.15",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0,
+      "fromAccountId": "acc_grab",
+      "toAccountId": "acc_1785692473083"
+    },
+    {
+      "id": 1785762866568,
+      "type": "in",
+      "category": "Bike",
+      "amount": 10200,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "20.14",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0
+    },
+    {
+      "id": 1785762862285,
+      "type": "in",
+      "category": "Bike",
+      "amount": 10200,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "20.14",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0
+    },
+    {
+      "id": 1785762858374,
+      "type": "in",
+      "category": "Bike",
+      "amount": 10200,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "20.14",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0
+    },
+    {
+      "id": 1785762849601,
+      "type": "in",
+      "category": "Bike",
+      "amount": 10200,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "20.14",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0
+    },
+    {
+      "id": 1785762833594,
+      "type": "in",
+      "category": "Bike",
+      "amount": 10200,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "20.13",
+      "paymentMethod": "Tunai",
+      "customerPaid": 9000
+    },
+    {
+      "id": 1785762813124,
+      "type": "in",
+      "category": "Bike",
+      "amount": 20300,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "20.13",
+      "paymentMethod": "Tunai",
+      "customerPaid": 21400
+    },
+    {
+      "id": 1785762786485,
+      "type": "in",
+      "category": "Bike",
+      "amount": 10200,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "20.13",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0
+    },
+    {
+      "id": 1785762775058,
+      "type": "in",
+      "category": "Bike",
+      "amount": 10200,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "20.12",
+      "paymentMethod": "Tunai",
+      "customerPaid": 9000
+    },
+    {
+      "id": 1785762639113,
+      "type": "in",
+      "category": "Bike",
+      "amount": 11700,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "20.10",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0
+    },
+    {
+      "id": 1785744671704,
+      "type": "transfer",
+      "category": "Transfer: OVO ➜ Gopay",
+      "amount": 12900,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "15.11",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0,
+      "fromAccountId": "acc_1785692473083",
+      "toAccountId": "acc_1785692565782"
+    },
+    {
+      "id": 1785744657194,
+      "type": "in",
+      "category": "Bike",
+      "amount": 12000,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "15.10",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0
+    },
+    {
+      "id": 1785743252007,
+      "type": "in",
+      "category": "Bike",
+      "amount": 13800,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "14.47",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0
+    },
+    {
+      "id": 1785740299820,
+      "type": "out",
+      "category": "Paket Data",
+      "amount": 35000,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "13.58",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0,
+      "accountId": "acc_1785692473083"
+    },
+    {
+      "id": 1785740258966,
+      "type": "in",
+      "category": "Bike",
+      "amount": 10200,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "13.57",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0
+    },
+    {
+      "id": 1785737332204,
+      "type": "out",
+      "category": "Parkir",
+      "amount": 2000,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "13.08",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0,
+      "accountId": "acc_cash"
+    },
+    {
+      "id": 1785737298181,
+      "type": "in",
+      "category": "Bike",
+      "amount": 10200,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "13.08",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0
+    },
+    {
+      "id": 1785737283403,
+      "type": "in",
+      "category": "Bike",
+      "amount": 10200,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "13.08",
+      "paymentMethod": "Tunai",
+      "customerPaid": 9000
+    },
+    {
+      "id": 1785737266255,
+      "type": "out",
+      "category": "Rokok",
+      "amount": 10000,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "13.07",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0,
+      "accountId": "acc_1785692473083"
+    },
+    {
+      "id": 1785737247942,
+      "type": "out",
+      "category": "Rokok",
+      "amount": 8000,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "13.07",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0,
+      "accountId": "acc_1785692519884"
+    },
+    {
+      "id": 1785737173411,
+      "type": "out",
+      "category": "Makan",
+      "amount": 30000,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "13.06",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0,
+      "accountId": "acc_1785692473083"
+    },
+    {
+      "id": 1785724172987,
+      "type": "in",
+      "category": "TIP",
+      "amount": 5000,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "09.29",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0
+    },
+    {
+      "id": 1785722667631,
+      "type": "adjustment",
+      "category": "Penyesuaian Saldo",
+      "amount": 796,
+      "note": "Penyesuaian sistem manual",
+      "accountId": "acc_grab",
+      "date": "2026-08-03",
+      "timestamp": "09.04"
+    },
+    {
+      "id": 1785722473120,
+      "type": "out",
+      "category": "OVO Finance ",
+      "amount": 47404,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "09.01",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0,
+      "accountId": "acc_grab"
+    },
+    {
+      "id": 1785722442196,
+      "type": "out",
+      "category": "OVO Finance ",
+      "amount": 3078,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "09.00",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0,
+      "accountId": "acc_grab"
+    },
+    {
+      "id": 1785721621306,
+      "type": "in",
+      "category": "TIP",
+      "amount": 5000,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "08.47",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0
+    },
+    {
+      "id": 1785721607968,
+      "type": "in",
+      "category": "Bike",
+      "amount": 24900,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "08.46",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0
+    },
+    {
+      "id": 1785719898841,
+      "type": "in",
+      "category": "Bike",
+      "amount": 11200,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "08.18",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0
+    },
+    {
+      "id": 1785718883744,
+      "type": "in",
+      "category": "Bike",
+      "amount": 10200,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "08.01",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0
+    },
+    {
+      "id": 1785717141447,
+      "type": "in",
+      "category": "Bike",
+      "amount": 10300,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "07.32",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0
+    },
+    {
+      "id": 1785716316499,
+      "type": "in",
+      "category": "Bike",
+      "amount": 12200,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "07.18",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0
+    },
+    {
+      "id": 1785714426515,
+      "type": "out",
+      "category": "OVO Finance ",
+      "amount": 10200,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "06.47",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0,
+      "accountId": "acc_grab"
+    },
+    {
+      "id": 1785714402735,
+      "type": "out",
+      "category": "OVO Finance ",
+      "amount": 28100,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "06.46",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0,
+      "accountId": "acc_grab"
+    },
+    {
+      "id": 1785714276339,
+      "type": "in",
+      "category": "TIP",
+      "amount": 2300,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "06.44",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0
+    },
+    {
+      "id": 1785714240115,
+      "type": "in",
+      "category": "Bike",
+      "amount": 12000,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "06.44",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0
+    },
+    {
+      "id": 1785708681316,
+      "type": "in",
+      "category": "Bike",
+      "amount": 10200,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "05.11",
+      "paymentMethod": "Non-Tunai"
+    },
+    {
+      "id": 1785707685250,
+      "type": "in",
+      "category": "Bike",
+      "amount": 28100,
+      "note": "",
+      "date": "2026-08-03",
+      "timestamp": "04.54",
+      "paymentMethod": "Non-Tunai"
+    },
+    {
+      "id": 1785695083216,
+      "type": "out",
+      "category": "Lain-lain",
+      "amount": 22400,
+      "note": "",
+      "date": "2026-08-03",
+      "accountId": "acc_grab"
+    },
+    {
+      "id": 1785695051432,
+      "type": "adjustment",
+      "category": "Penyesuaian: Dompet Tunai",
+      "amount": -10800,
+      "note": "",
+      "date": "2026-08-03",
+      "accountId": "acc_cash",
+      "oldBalance": 21800
+    },
+    {
+      "id": 1785692651326,
+      "type": "adjustment",
+      "category": "Rekening Baru: Seabank",
+      "amount": 0,
+      "accountId": "acc_1785692651326",
+      "date": "2026-08-03"
+    },
+    {
+      "id": 1785692620531,
+      "type": "adjustment",
+      "category": "Rekening Baru: BCA",
+      "amount": 555,
+      "accountId": "acc_1785692620531",
+      "date": "2026-08-03"
+    },
+    {
+      "id": 1785692565782,
+      "type": "adjustment",
+      "category": "Rekening Baru: Gopay",
+      "amount": 1526,
+      "accountId": "acc_1785692565782",
+      "date": "2026-08-03"
+    },
+    {
+      "id": 1785692519885,
+      "type": "adjustment",
+      "category": "Rekening Baru: Dana",
+      "amount": 9157,
+      "accountId": "acc_1785692519884",
+      "date": "2026-08-03"
+    },
+    {
+      "id": 1785692473083,
+      "type": "adjustment",
+      "category": "Rekening Baru: OVO",
+      "amount": 1401977,
+      "accountId": "acc_1785692473083",
+      "date": "2026-08-03"
+    },
+    {
+      "id": 1785689162178,
+      "type": "in",
+      "category": "Trip",
+      "amount": 11200,
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0,
+      "walletCashDelta": 0,
+      "walletDigitalDelta": 11200,
+      "note": "",
+      "date": "2026-08-02"
+    },
+    {
+      "id": 1785684446302,
+      "type": "in",
+      "category": "Trip",
+      "amount": 11200,
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0,
+      "walletCashDelta": 0,
+      "walletDigitalDelta": 11200,
+      "note": "",
+      "date": "2026-08-02"
+    },
+    {
+      "id": 1785684352163,
+      "type": "in",
+      "category": "Tips",
+      "amount": 3800,
+      "paymentMethod": "Tunai",
+      "customerPaid": 3800,
+      "walletCashDelta": 3800,
+      "walletDigitalDelta": 0,
+      "note": "",
+      "date": "2026-08-02",
+      "accountId": "acc_grab"
+    },
+    {
+      "id": 1785684324914,
+      "type": "out",
+      "category": "OVO Finance",
+      "amount": 28500,
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0,
+      "walletCashDelta": 0,
+      "walletDigitalDelta": -28500,
+      "note": "",
+      "date": "2026-08-02",
+      "accountId": "acc_grab"
+    },
+    {
+      "id": 1785684236364,
+      "type": "in",
+      "category": "Trip",
+      "amount": 10200,
+      "paymentMethod": "Tunai",
+      "customerPaid": 9000,
+      "walletCashDelta": 9000,
+      "walletDigitalDelta": 1200,
+      "note": "",
+      "date": "2026-08-02",
+      "accountId": "acc_grab"
+    },
+    {
+      "id": 1785683378990,
+      "type": "in",
+      "category": "Trip",
+      "amount": 10200,
+      "paymentMethod": "Tunai",
+      "customerPaid": 9000,
+      "walletCashDelta": 9000,
+      "walletDigitalDelta": 1200,
+      "note": "",
+      "date": "2026-08-02",
+      "accountId": "acc_grab"
+    },
+    {
+      "id": 1785682848062,
+      "type": "out",
+      "category": "OVO Finance",
+      "amount": 38800,
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0,
+      "walletCashDelta": 0,
+      "walletDigitalDelta": -38800,
+      "note": "",
+      "date": "2026-08-02",
+      "accountId": "acc_grab"
+    },
+    {
+      "id": 1785675502732,
+      "type": "in",
+      "category": "Trip",
+      "amount": 10200,
+      "note": "",
+      "date": "2026-08-02",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0,
+      "walletDigitalDelta": 10200,
+      "walletCashDelta": 0
+    },
+    {
+      "id": 1785674375888,
+      "type": "in",
+      "category": "Trip",
+      "amount": 10200,
+      "note": "",
+      "date": "2026-08-02",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0,
+      "walletDigitalDelta": 10200,
+      "walletCashDelta": 0
+    },
+    {
+      "id": 1785672503897,
+      "type": "in",
+      "category": "Trip",
+      "amount": 16000,
+      "note": "",
+      "date": "2026-08-02",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0,
+      "walletDigitalDelta": 16000,
+      "walletCashDelta": 0
+    },
+    {
+      "id": 1785672130460,
+      "type": "in",
+      "category": "Trip",
+      "amount": 11200,
+      "note": "",
+      "date": "2026-08-02",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0,
+      "walletDigitalDelta": 11200,
+      "walletCashDelta": 0
+    },
+    {
+      "id": 1785672125187,
+      "type": "in",
+      "category": "Trip",
+      "amount": 17300,
+      "note": "",
+      "date": "2026-08-02",
+      "paymentMethod": "Non-Tunai",
+      "customerPaid": 0,
+      "walletDigitalDelta": 17300,
+      "walletCashDelta": 0
+    }
+  ],
+  "accounts": [
+    {
+      "id": "acc_cash",
+      "name": "Dompet Tunai",
+      "balance": 44400,
+      "icon": "wallet",
+      "color": "gray"
+    },
+    {
+      "id": "acc_grab",
+      "name": "Digital Grab",
+      "balance": 814,
+      "icon": "mobile-screen",
+      "color": "green"
+    },
+    {
+      "id": "acc_1785692473083",
+      "name": "OVO",
+      "icon": "mobile-screen",
+      "color": "purple",
+      "balance": 1452077
+    },
+    {
+      "id": "acc_1785692519884",
+      "name": "Dana",
+      "icon": "mobile-screen",
+      "color": "blue",
+      "balance": 1157
+    },
+    {
+      "id": "acc_1785692565782",
+      "name": "Gopay",
+      "icon": "mobile-screen",
+      "color": "green",
+      "balance": 14426
+    },
+    {
+      "id": "acc_1785692620531",
+      "name": "BCA",
+      "icon": "building-columns",
+      "color": "blue",
+      "balance": 555
+    },
+    {
+      "id": "acc_1785692651326",
+      "name": "Seabank",
+      "icon": "building-columns",
+      "color": "orange",
+      "balance": 0
+    }
+  ],
+  "goals": [
+    {
+      "id": "goal_1785710724131",
+      "name": "Aerox",
+      "targetAmount": 40000000,
+      "currentAmount": 0,
+      "monthlyTarget": 5000000,
+      "startDate": "2026-08-03"
+    },
+    {
+      "id": "goal_1785727796666",
+      "name": "Kontrakan",
+      "targetAmount": 600000,
+      "currentAmount": 200000,
+      "monthlyTarget": 600000,
+      "startDate": "2026-08-03"
+    }
+  ],
+  "categories": [
+    {
+      "id": "cat_1785705201278",
+      "name": "Baterai",
+      "type": "out",
+      "icon": "Baterai",
+      "color": "grab"
+    },
+    {
+      "id": "cat_1785707679030",
+      "name": "Bike",
+      "type": "in",
+      "icon": "motorcycle",
+      "color": "gray"
+    },
+    {
+      "id": "cat_1785714266403",
+      "name": "TIP",
+      "type": "in",
+      "icon": "donate",
+      "color": "gray"
+    },
+    {
+      "id": "cat_1785714375375",
+      "name": "OVO Finance ",
+      "type": "out",
+      "icon": "OVO",
+      "color": "gray"
+    },
+    {
+      "id": "cat_1785727703263",
+      "name": "Rokok",
+      "type": "out",
+      "icon": "cigarette",
+      "color": "gray"
+    },
+    {
+      "id": "cat_1785727739013",
+      "name": "Belanja",
+      "type": "out",
+      "icon": "Shop",
+      "color": "gray"
+    },
+    {
+      "id": "cat_1785730129013",
+      "name": "Makan",
+      "type": "out",
+      "icon": "food",
+      "color": "gray"
+    },
+    {
+      "id": "cat_1785737325299",
+      "name": "Parkir",
+      "type": "out",
+      "icon": "parking",
+      "color": "gray"
+    },
+    {
+      "id": "cat_1785740287366",
+      "name": "Paket Data",
+      "type": "out",
+      "icon": "Phone",
+      "color": "gray"
+    }
+  ],
+  "goalHistory": [],
+  "settings": {
+    "username": "Gaska",
+    "theme": "light",
+    "language": "id",
+    "currency": "IDR",
+    "notifications": {
+      "reminder": true,
+      "target": true,
+      "review": true
+    }
+  },
+  "dailyArchives": []
+}
