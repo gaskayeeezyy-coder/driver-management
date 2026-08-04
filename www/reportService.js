@@ -1,7 +1,15 @@
-// reportService.js - Modul Laporan, Driver Dashboard, AI Analytics, Settings & Backup (Logika 100% Identik dengan server.js)
+// reportService.js - Modul Laporan, Driver Dashboard, AI Analytics, Settings & Backup
 const ReportService = {
 
-  // Financial Report & Chart (Pengganti app.get('/api/financial-report'))
+  // Helper internal untuk memformat menit menjadi format jam & menit yang rapi (misal: 7j 35m)
+  formatOnlineTime(totalMinutes) {
+    if (!totalMinutes || isNaN(totalMinutes)) return "0j 0m";
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    return `${hours}j ${minutes}m`;
+  },
+
+  // Financial Report & Chart
   getFinancialReport(query = {}) {
     const db = DBService.readDB();
     const { period, exactDate } = query; 
@@ -36,7 +44,6 @@ const ReportService = {
 
     let totalIncome = 0, totalExpense = 0;
     const dailyMap = {};
-    
     const pieIncome = {}; const pieExpense = {};
     const pieDetailsIncome = {}; const pieDetailsExpense = {}; 
 
@@ -53,7 +60,7 @@ const ReportService = {
         if (!pieDetailsIncome[t.category]) pieDetailsIncome[t.category] = [];
         pieDetailsIncome[t.category].push(t);
         
-        if (['Trip', 'Paket', 'Food', 'G-Move', 'G-Bite', 'G-Drop'].includes(t.category) || t.category.toLowerCase().includes('trip')) {
+        if (['Trip', 'Paket', 'Food', 'G-Move', 'G-Bite', 'G-Drop'].includes(t.category) || (t.category && t.category.toLowerCase().includes('trip'))) {
           dailyMap[t.date].trips++;
         }
         
@@ -87,32 +94,37 @@ const ReportService = {
     };
   },
 
-  // Driver Dashboard (Pengganti app.get('/api/driver-dashboard'))
-    getDriverDashboard() {
+  // Driver Dashboard
+  getDriverDashboard() {
     const db = DBService.readDB();
     const todayStr = DBService.getLocalToday();
     const todayTxs = (db.transactions || []).filter(t => t.date === todayStr);
 
     let totalIncome = todayTxs.filter(t => t.type === 'in').reduce((sum, t) => sum + t.amount, 0);
     let totalTrip = todayTxs.filter(t => t.type === 'in').length;
-    
-    // Ambil data waktu online mentah (misal dari setting atau akumulasi trip), lalu format rapi
-    let rawMinutes = db.driverOnlineMinutes || 0; // atau sumber data waktu online Anda
-    let formattedOnlineTime = this.formatOnlineTime(rawMinutes);
+    let totalExpense = todayTxs.filter(t => t.type === 'out').reduce((sum, t) => sum + t.amount, 0);
+    let labaBersih = totalIncome - totalExpense;
 
-    return {
-      onlineTime: formattedOnlineTime,
-      totalIncome: totalIncome,
+    let stats = {
+      pendapatan: totalIncome,
+      pengeluaran: totalExpense,
+      labaBersih: labaBersih,
       totalTrip: totalTrip,
-      target: db.target || 200000
+      tripSelesai: 0,
+      tripBatal: 0,
+      totalTip: 0,
+      jamOnlineMins: 0,
+      jamProduktifData: new Array(24).fill(0)
     };
 
     let minTime = null, maxTime = null;
 
-    txs.forEach(t => {
+    todayTxs.forEach(t => {
       if (t.timestamp) {
-        const [h, m] = t.timestamp.split(':').map(Number);
-        const minutes = (h * 60) + (m || 0);
+        const parts = t.timestamp.split(':');
+        const h = parseInt(parts[0]) || 0;
+        const m = parseInt(parts[1]) || 0;
+        const minutes = (h * 60) + m;
         if (minTime === null || minutes < minTime) minTime = minutes;
         if (maxTime === null || minutes > maxTime) maxTime = minutes;
         
@@ -122,40 +134,34 @@ const ReportService = {
       }
 
       if (t.type === 'in') {
-        stats.pendapatan += t.amount;
         if (t.tipAmount > 0) {
           stats.totalTip += t.tipAmount;
-          stats.pendapatan += t.tipAmount;
         }
         
-        let isTrip = ['Trip', 'Paket', 'Food', 'G-Move', 'G-Bite', 'G-Drop'].includes(t.category) || t.category.toLowerCase().includes('trip');
+        let isTrip = ['Trip', 'Paket', 'Food', 'G-Move', 'G-Bite', 'G-Drop'].includes(t.category) || (t.category && t.category.toLowerCase().includes('trip'));
         if (isTrip) {
-          stats.totalTrip++;
-          if (t.note.toLowerCase().includes('batal') || t.note.toLowerCase().includes('cancel')) {
+          const note = (t.note || '').toLowerCase();
+          if (note.includes('batal') || note.includes('cancel')) {
             stats.tripBatal++;
           } else {
             stats.tripSelesai++;
           }
         }
-      } else if (t.type === 'out') {
-        stats.pengeluaran += t.amount;
       }
     });
 
-    stats.labaBersih = stats.pendapatan - stats.pengeluaran;
-    
     if (minTime !== null && maxTime !== null && maxTime >= minTime) {
       stats.jamOnlineMins = maxTime - minTime;
+    } else {
+      stats.jamOnlineMins = db.driverOnlineMinutes || 0;
     }
-      const totalMin = stats.jamOnlineMins || 0;
-    const jam = Math.floor(totalMin / 60);
-    const menit = totalMin % 60;
-    stats.formattedOnlineTime = `${jam}j ${menit}m`;
+
+    stats.formattedOnlineTime = this.formatOnlineTime(stats.jamOnlineMins);
 
     let peakHour = stats.jamProduktifData.indexOf(Math.max(...stats.jamProduktifData));
     let peakVal = stats.jamProduktifData[peakHour];
     
-    let summary = `Hari ini Anda telah menyelesaikan ${stats.tripSelesai} trip dengan laba bersih Rp${stats.labaBersih.toLocaleString('id-ID')}.`;
+    let summary = `Hari ini Anda telah menyelesaikan ${stats.tripSelesai || totalTrip} trip dengan laba bersih Rp${stats.labaBersih.toLocaleString('id-ID')}.`;
     if (peakVal > 0) {
       summary += ` Jam kerja paling produktif Anda adalah pukul ${peakHour}:00 - ${peakHour+1}:00.`;
     }
@@ -164,14 +170,17 @@ const ReportService = {
     }
 
     return {
+      onlineTime: stats.formattedOnlineTime,
+      totalIncome: totalIncome,
+      totalTrip: totalTrip,
+      target: db.target || 200000,
       stats,
-      target: db.target,
       aiSummary: summary,
       peakHour: peakVal > 0 ? `${peakHour}:00 - ${peakHour+1}:00` : '-'
     };
   },
 
-  // Tutup Buku (Pengganti app.post('/api/tutup-buku'))
+  // Tutup Buku
   processTutupBuku() {
     const db = DBService.readDB();
     const today = DBService.getLocalToday();
@@ -183,7 +192,7 @@ const ReportService = {
       if (t.type === 'in') {
         inToday += t.amount;
         if (t.tipAmount > 0) { inToday += t.tipAmount; tipToday += t.tipAmount; }
-        if (['Trip', 'Paket', 'Food'].includes(t.category) || t.category.toLowerCase().includes('trip')) trips++;
+        if (['Trip', 'Paket', 'Food'].includes(t.category) || (t.category && t.category.toLowerCase().includes('trip'))) trips++;
       } else if (t.type === 'out') {
         outToday += t.amount;
       }
@@ -208,13 +217,12 @@ const ReportService = {
     return { message: 'Buku harian berhasil ditutup dan diarsipkan.', archive };
   },
 
-  // Get Daily Archives (Pengganti app.get('/api/tutup-buku'))
   getDailyArchives() {
     const db = DBService.readDB();
     return db.dailyArchives || [];
   },
 
-  // Analytics Deep / AI Financial Analytics (Pengganti app.get('/api/analytics-deep'))
+  // Analytics Deep / AI Financial Analytics
   getAnalyticsDeep() {
     const db = DBService.readDB();
     const todayStr = DBService.getLocalToday();
@@ -241,7 +249,7 @@ const ReportService = {
         totalIn += t.amount;
         dayMap[dayOfWeek] = (dayMap[dayOfWeek] || 0) + t.amount;
         hourlyMap[hour] = (hourlyMap[hour] || 0) + t.amount;
-        if (t.category.toLowerCase().includes('trip') || ['Trip', 'Paket', 'Food'].includes(t.category)) totalTrips++;
+        if ((t.category && t.category.toLowerCase().includes('trip')) || ['Trip', 'Paket', 'Food'].includes(t.category)) totalTrips++;
         
         if (t.tipAmount > 0) { tipTotal += t.tipAmount; totalIn += t.tipAmount; }
       } else if (t.type === 'out') {
@@ -254,11 +262,20 @@ const ReportService = {
     });
 
     let healthScore = 100;
-    let reason = "Kondisi keuangan sangat sehat dan stabil.";
-    if (totalOut === 0 && totalIn === 0) { healthScore = 0; reason = "Belum ada data yang cukup untuk dianalisa."; }
-    else if (totalOut > totalIn) { healthScore = 40; reason = "Kritis: Pengeluaran 30 hari terakhir melebihi total pendapatan Anda."; }
-    else if (totalOut > (totalIn * 0.7)) { healthScore = 65; reason = "Perhatian: Biaya operasional memakan lebih dari 70% pendapatan kotor Anda."; }
-    else if (totalOut > (totalIn * 0.5)) { healthScore = 85; reason = "Cukup baik, rasio pengeluaran operasional berada pada ambang batas wajar (50%)."; }
+    let reason = I18nService ? I18nService.t('healthStable') : "Kondisi keuangan sangat sehat dan stabil.";
+    if (totalOut === 0 && totalIn === 0) { 
+      healthScore = 0; 
+      reason = I18nService ? I18nService.t('healthNoData') : "Belum ada data yang cukup untuk dianalisa."; 
+    } else if (totalOut > totalIn) { 
+      healthScore = 40; 
+      reason = I18nService ? I18nService.t('healthCritical') : "Kritis: Pengeluaran 30 hari terakhir melebihi total pendapatan Anda."; 
+    } else if (totalOut > (totalIn * 0.7)) { 
+      healthScore = 65; 
+      reason = I18nService ? I18nService.t('healthWarning') : "Perhatian: Biaya operasional memakan lebih dari 70% pendapatan kotor Anda."; 
+    } else if (totalOut > (totalIn * 0.5)) { 
+      healthScore = 85; 
+      reason = I18nService ? I18nService.t('healthFair') : "Cukup baik, rasio pengeluaran operasional berada pada ambang batas wajar (50%)."; 
+    }
 
     const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
     let bestHour = Object.keys(hourlyMap).length > 0 ? Object.keys(hourlyMap).reduce((a, b) => hourlyMap[a] > hourlyMap[b] ? a : b) : null;
@@ -279,10 +296,10 @@ const ReportService = {
 
     const insights = [];
 
-    if (totalTrips > 0) {
-      let pctBestHour = Math.round((hourlyMap[bestHour] / totalIn) * 100);
+    if (totalTrips > 0 && bestHour !== null && bestDayIdx !== null) {
+      let pctBestHour = hourlyMap[bestHour] && totalIn > 0 ? Math.round((hourlyMap[bestHour] / totalIn) * 100) : 0;
       insights.push({
-        title: "Performa Pendapatan & Jam Emas", type: "positive", icon: "motorcycle",
+        title: I18nService ? I18nService.t('perfTitle') : "Performa Pendapatan & Jam Emas", type: "positive", icon: "motorcycle",
         dataPoint: `Jam ${bestHour}:00 - ${parseInt(bestHour)+1}:00 = ${pctBestHour}% Total Pendapatan`,
         desc: `Rata-rata pendapatan per trip Anda adalah Rp ${Math.round(avgTripIn).toLocaleString('id-ID')}. Hari ${days[bestDayIdx]} merupakan hari paling menguntungkan.`,
         recommendation: `Untuk memaksimalkan pendapatan, pastikan Anda selalu online pada jam ${bestHour}:00 dan fokus di hari ${days[bestDayIdx]}.`
@@ -290,22 +307,22 @@ const ReportService = {
     }
 
     if (tipTotal > 0) {
-      let pctTip = ((tipTotal/totalIn)*100).toFixed(1);
+      let pctTip = totalIn > 0 ? ((tipTotal/totalIn)*100).toFixed(1) : 0;
       insights.push({
-        title: "Analisa Tip Pelanggan", type: "positive", icon: "hand-holding-dollar",
+        title: I18nService ? I18nService.t('tipTitle') : "Analisa Tip Pelanggan", type: "positive", icon: "hand-holding-dollar",
         dataPoint: `Total Tip 30 Hari: Rp ${tipTotal.toLocaleString('id-ID')}`,
         desc: `Tip menyumbang ${pctTip}% dari seluruh pendapatan kotor operasional Anda.`,
-        recommendation: `Rasio tip ini sangat baik. Pertahankan kenyamanan berkendara, kebersihan helm/motor, dan sapaan ramah kepada pelanggan.`
+        recommendation: `Rasio tip ini sangat baik. Pertahankan kenyamanan berkendara dan sapaan ramah kepada pelanggan.`
       });
     }
 
     let biggestExpCat = Object.keys(categoryOutMap).length > 0 ? Object.keys(categoryOutMap).reduce((a, b) => categoryOutMap[a] > categoryOutMap[b] ? a : b) : null;
     if (biggestExpCat) {
       insights.push({
-        title: "Analisa Pengeluaran Operasional", type: increasingExpMsg ? "warning" : "positive", icon: "magnifying-glass-chart",
+        title: I18nService ? I18nService.t('expTitle') : "Analisa Pengeluaran Operasional", type: increasingExpMsg ? "warning" : "positive", icon: "magnifying-glass-chart",
         dataPoint: `Beban Terbesar: ${biggestExpCat}`,
         desc: increasingExpMsg || `Beban operasional tertinggi Anda berada di kategori ${biggestExpCat} (Rp ${categoryOutMap[biggestExpCat].toLocaleString('id-ID')}).`,
-        recommendation: `Evaluasi kembali apakah pengeluaran ${biggestExpCat} bisa ditekan. Cari alternatif rute atau perbaiki pola gaya berkendara (jika beban bensin yang dominan).`
+        recommendation: `Evaluasi kembali apakah pengeluaran ${biggestExpCat} bisa ditekan.`
       });
     }
     
@@ -314,10 +331,10 @@ const ReportService = {
       let activeGoal = dbGoals[0]; 
       let progress = activeGoal.targetAmount > 0 ? Math.round((activeGoal.currentAmount / activeGoal.targetAmount) * 100) : 0;
       insights.push({
-        title: "Evaluasi Target: " + activeGoal.name, type: progress > 50 ? "positive" : "warning", icon: "bullseye",
+        title: (I18nService ? I18nService.t('goalEval') : "Evaluasi Target: ") + activeGoal.name, type: progress > 50 ? "positive" : "warning", icon: "bullseye",
         dataPoint: `Progres Terkumpul: ${progress}%`,
         desc: progress === 0 ? `Anda belum mulai menabung untuk target ini.` : `Anda telah berhasil mengumpulkan Rp${activeGoal.currentAmount.toLocaleString('id-ID')} dari target Rp${activeGoal.targetAmount.toLocaleString('id-ID')}.`,
-        recommendation: `Sisihkan setidaknya Rp${Math.round(activeGoal.monthlyTarget/30).toLocaleString('id-ID')} per hari sebelum uang hasil operasional terpakai.`
+        recommendation: `Sisihkan setidaknya Rp${Math.round((activeGoal.monthlyTarget || 0)/30).toLocaleString('id-ID')} per hari.`
       });
     }
 
@@ -334,6 +351,7 @@ const ReportService = {
     const db = DBService.readDB(); 
     const { name, type, icon } = body;
     const newCat = { id: 'cat_' + Date.now(), name: name || 'Baru', type: type || 'out', icon: icon || 'tag', color: 'gray' };
+    if (!db.categories) db.categories = [];
     db.categories.push(newCat); 
     DBService.writeDB(db); 
     return { message: 'Kategori ditambahkan', category: newCat };
@@ -341,7 +359,7 @@ const ReportService = {
 
   deleteCategory(id) {
     const db = DBService.readDB(); 
-    db.categories = db.categories.filter(c => c.id !== id); 
+    db.categories = (db.categories || []).filter(c => c.id !== id); 
     DBService.writeDB(db); 
     return { message: 'Kategori dihapus' };
   },
@@ -370,8 +388,9 @@ const ReportService = {
     } else { 
       return { error: 'Format database tidak valid' }; 
     }
-  }
-    // Tambahkan fungsi ini di dalam obyek ReportService di reportService.js
+  },
+
+  // Change Log v1.2.0
   getChangeLog() {
     return [
       {
@@ -393,12 +412,10 @@ const ReportService = {
         date: "2025 - 2026",
         title: "Offline Architecture & Financial Hub",
         items: [
-          "Migrasi arsitektur 100% offline (tanpa server/Termux)",
+          "Migrasi arsitektur 100% offline",
           "Financial Hub & Chart analitik keuangan",
           "AI Analytics & Skor Kesehatan Keuangan",
-          "Manajemen Target & Multi Rekening / Dompet",
-          "Fitur Backup & Restore data lokal",
-          "Perbaikan sistem mutasi transaksi & reversal saldo"
+          "Manajemen Target & Multi Rekening"
         ]
       },
       {
@@ -406,11 +423,9 @@ const ReportService = {
         date: "2025",
         title: "Initial Release",
         items: [
-          "Rilis pertama aplikasi Driver Management",
-          "Pencatatan trip, pemasukan, dan pengeluaran harian",
-          "Dashboard ringkasan harian ojek online"
+          "Rilis pertama aplikasi Driver Management"
         ]
       }
     ];
-  },
+  }
 };
