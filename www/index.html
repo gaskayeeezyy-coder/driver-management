@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Grab Tracker - Master Financial Suite v1.0</title>
+  <title>Driver Management - Created by Gaska</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -146,7 +146,7 @@
   </div>
 
   <!-- ===================================================================================== -->
-  <!-- 1B. VIEW: DASHBOARD DRIVER (FITUR BARU)                                               -->
+  <!-- 1B. VIEW: DASHBOARD DRIVER                                                            -->
   <!-- ===================================================================================== -->
   <div id="view-driver" class="view-section px-6 pt-8 pb-12">
     <div class="flex justify-between items-center mb-6">
@@ -159,7 +159,6 @@
       </button>
     </div>
 
-    <!-- Statistik Hari Ini Grid -->
     <div class="grid grid-cols-2 gap-3 mb-5">
        <div class="bg-white p-4 rounded-2xl premium-shadow border border-gray-100">
          <p class="text-[10px] text-gray-400 font-bold uppercase mb-1">Total Trip</p>
@@ -174,7 +173,6 @@
        </div>
     </div>
 
-    <!-- Keuangan Driver Grid -->
     <div class="bg-gradient-to-br from-grabDark to-teal-700 rounded-[24px] premium-shadow p-5 mb-5 text-white interactive-card">
       <div class="flex justify-between items-center mb-4">
         <p class="text-[11px] text-green-100 font-bold uppercase tracking-wide">Pendapatan Kotor</p>
@@ -193,7 +191,6 @@
       </div>
     </div>
 
-    <!-- Statistik Performa -->
     <div class="bg-white rounded-2xl premium-shadow p-5 mb-5 border border-gray-100">
        <h3 class="text-[11px] font-bold text-gray-500 uppercase tracking-wide mb-3 border-b border-gray-100 pb-3">Performa Operasional</h3>
        <div class="grid grid-cols-2 gap-4">
@@ -208,7 +205,6 @@
        </div>
     </div>
 
-    <!-- Grafik Jam Produktif -->
     <div class="bg-white rounded-2xl premium-shadow p-5 border border-gray-100 mb-5">
       <div class="flex justify-between items-center mb-4 border-b border-gray-100 pb-2">
         <h3 class="text-[11px] font-bold text-gray-500 uppercase tracking-wide">Grafik Jam Produktif</h3>
@@ -217,7 +213,6 @@
       <div style="height: 160px; position: relative;"><canvas id="chartJamProduktif"></canvas></div>
     </div>
 
-    <!-- AI Summary Harian -->
     <div class="bg-blue-50 border border-blue-100 rounded-2xl p-4 flex gap-3 items-start">
        <div class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center shrink-0"><i class="fa-solid fa-robot text-xs"></i></div>
        <div>
@@ -268,7 +263,6 @@
       </div>
     </div>
 
-    <!-- Filter Kalender & Bulan Interaktif -->
     <div class="bg-white rounded-2xl premium-shadow p-3 border border-gray-100 mb-5 flex gap-2">
        <input type="month" id="filter-month" onchange="applyCustomReportFilter()" class="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs font-bold text-gray-700 outline-none">
        <input type="date" id="filter-date" onchange="applyCustomDateFilter()" class="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs font-bold text-gray-700 outline-none">
@@ -474,14 +468,14 @@
     <div class="bg-white rounded-2xl premium-shadow p-5 mb-5 border border-gray-100">
       <h3 class="text-[11px] font-bold text-gray-500 uppercase tracking-wide mb-4 border-b border-gray-100 pb-2">Data & Backup</h3>
       <div class="grid grid-cols-2 gap-3">
-         <button onclick="window.location.href='/api/backup'" class="bg-blue-50 text-blue-600 border border-blue-100 py-3 rounded-xl text-xs font-bold"><i class="fa-solid fa-download mr-1"></i> Export (Backup)</button>
+         <button onclick="exportBackupFile()" class="bg-blue-50 text-blue-600 border border-blue-100 py-3 rounded-xl text-xs font-bold"><i class="fa-solid fa-download mr-1"></i> Export (Backup)</button>
          <button onclick="document.getElementById('restore-file').click()" class="bg-orange-50 text-orange-600 border border-orange-100 py-3 rounded-xl text-xs font-bold"><i class="fa-solid fa-upload mr-1"></i> Import (Restore)</button>
          <input type="file" id="restore-file" class="hidden" accept=".json" onchange="restoreData(event)">
       </div>
     </div>
 
     <div class="text-center mt-8 mb-4">
-       <p class="text-xs font-bold text-gray-400">Grab Tracker - Master Financial Suite</p>
+       <p class="text-xs font-bold text-gray-400">Driver Management - Created by Gaska</p>
        <p class="text-[10px] text-gray-300 mb-2">Versi 1.0 (Final Release)</p>
        <button onclick="openGlobalDetail('Changelog v1.0', '- Dashboard khusus Driver dengan grafik jam produktif.<br>- AI Analisa pendalaman data.<br>- Interaktivitas pada Laporan Pie Chart.<br>- Perbaikan estimasi Target Finansial.<br>- Dark Mode dan Multibahasa Support.')" class="text-[10px] text-grab font-bold">Lihat Yang Baru (Changelog)</button>
     </div>
@@ -496,7 +490,6 @@
       <button onclick="switchView('dashboard')" class="text-[10px] font-bold text-gray-500 bg-gray-100 px-3 py-1.5 rounded-full interactive-card"><i class="fa-solid fa-xmark mr-1"></i> Batal</button>
     </div>
 
-    <!-- Tabs -->
     <div class="flex bg-gray-200/60 rounded-xl p-1 mb-6">
       <button id="tab-in" onclick="switchInputTab('in')" class="flex-1 py-3 rounded-lg bg-white shadow-sm text-xs font-extrabold text-grab transition-all duration-200">Pemasukan</button>
       <button id="tab-out" onclick="switchInputTab('out')" class="flex-1 py-3 rounded-lg text-xs font-bold text-gray-500 transition-all duration-200">Pengeluaran</button>
@@ -505,7 +498,6 @@
 
     <div class="bg-white rounded-[24px] premium-shadow p-5 mb-5 border border-gray-100">
       
-      <!-- Waktu Input -->
       <div class="flex gap-2 mb-6">
          <div class="flex-1">
             <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">Tanggal</p>
@@ -517,7 +509,6 @@
          </div>
       </div>
 
-      <!-- Kategori Grid -->
       <div class="mb-6">
         <div class="flex justify-between items-end mb-3">
            <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Kategori</p>
@@ -526,13 +517,11 @@
         <div id="dynamic-category-grid" class="grid grid-cols-3 gap-2.5 max-h-[220px] overflow-y-auto hide-scrollbar p-1 -mx-1"></div>
       </div>
 
-      <!-- Akun Sumber (Out) -->
       <div id="source-account-container" class="mb-6 hidden">
         <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Ambil Saldo Dari</p>
         <select id="select-source-acc" class="w-full bg-gray-50 border border-gray-200 rounded-xl py-4 px-4 font-bold text-gray-800 text-xs focus:outline-none focus:ring-2 focus:ring-red-100 focus:border-red-400 appearance-none"></select>
       </div>
 
-      <!-- Akun Transfer -->
       <div id="area-transfer" class="mb-6 hidden space-y-3">
         <div>
           <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">Dari Rekening</p>
@@ -545,7 +534,6 @@
         </div>
       </div>
 
-      <!-- Metode Pembayaran & Core Logic (In) -->
       <div id="payment-method-container" class="mb-6">
         <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Diterima Melalui (Grab)</p>
         <div class="flex gap-2 mb-3">
@@ -563,7 +551,6 @@
         </div>
       </div>
 
-      <!-- MODUL TIP -->
       <div id="tip-container" class="mb-6 bg-pink-50/50 border border-pink-100 rounded-xl p-4">
          <div class="flex items-center justify-between mb-3">
             <p class="text-[11px] font-bold text-pink-600 uppercase tracking-widest"><i class="fa-solid fa-gift mr-1"></i> Pelanggan Beri Tip?</p>
@@ -588,13 +575,11 @@
          </div>
       </div>
 
-      <!-- Catatan Opsional -->
       <div class="mb-6 relative">
          <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">Catatan (Opsional)</p>
          <input id="input-note" type="text" placeholder="Tulis keterangan..." class="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 px-4 font-medium text-xs focus:outline-none focus:border-gray-400 transition-all">
       </div>
 
-      <!-- Nominal & Save -->
       <div class="relative mb-5 bg-gray-50 rounded-xl p-4 border border-gray-200 focus-within:border-grab focus-within:ring-2 focus-within:ring-green-50 transition-all">
         <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2" id="txt-amount-label">Total Pendapatan (Tanpa Tip)</p>
         <div class="flex items-center">
@@ -610,7 +595,7 @@
   </div>
 
   <!-- ===================================================================================== -->
-  <!-- 8. BOTTOM NAVIGATION BAR (DIPERBARUI)                                                 -->
+  <!-- 8. BOTTOM NAVIGATION BAR                                                              -->
   <!-- ===================================================================================== -->
   <div class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-100 px-1 py-1 flex justify-around items-end z-40 premium-shadow pb-safe overflow-x-auto hide-scrollbar flex-nowrap">
     <button onclick="switchView('dashboard')" id="nav-dashboard" class="nav-item active flex flex-col items-center justify-center p-1 text-gray-400 w-11 rounded-lg active:bg-gray-50 shrink-0">
@@ -627,7 +612,7 @@
       <button onclick="switchView('input')" id="nav-input" class="absolute bottom-1 bg-grab text-white w-[50px] h-[50px] rounded-full shadow-lg shadow-green-200 flex items-center justify-center border-[4px] border-white transform transition-transform active:scale-90">
         <i class="fa-solid fa-plus text-xl"></i>
       </button>
-      <div class="w-12 h-10"></div> <!-- Placeholder spacing -->
+      <div class="w-12 h-10"></div>
     </div>
     
     <button onclick="switchView('laporan')" id="nav-laporan" class="nav-item flex flex-col items-center justify-center p-1 text-gray-400 w-11 rounded-lg active:bg-gray-50 shrink-0">
@@ -701,7 +686,6 @@
     </div>
   </div>
 
-  <!-- TARGET MODAL WITH DELETE -->
   <div id="modal-add-goal" class="bottom-sheet">
     <div class="sheet-handle"></div>
     <div class="sheet-content">
@@ -728,7 +712,6 @@
     </div>
   </div>
 
-  <!-- Modal Update Saldo Goal -->
   <div id="modal-update-goal" class="bottom-sheet"><div class="sheet-handle"></div><div class="sheet-content">
       <h2 class="text-xl font-black text-gray-800 mb-6">Perbarui Saldo Terkumpul</h2>
       <input type="hidden" id="goal-update-id">
@@ -736,7 +719,6 @@
       <button onclick="saveGoalBalance()" class="w-full bg-indigo-600 text-white font-bold py-4 rounded-xl text-sm">Perbarui Progress</button>
   </div></div>
 
-  <!-- EDIT TRANSAKSI FULL -->
   <div id="modal-edit-tx" class="bottom-sheet h-[95vh]"><div class="sheet-handle"></div><div class="sheet-content">
       <h2 class="text-xl font-black text-gray-800 mb-4 border-b border-gray-100 pb-3">Edit Transaksi</h2>
       <input type="hidden" id="edit-tx-id">
@@ -778,1024 +760,9 @@
   </div>
 
   <!-- ===================================================================================== -->
-  <!-- JAVASCRIPT LOGIC (VERSION 1.0 FINAL POLISH)                                           -->
+  <!-- JAVASCRIPT PENGHUBUNG LOKAL OFFLINE                                                 -->
   <!-- ===================================================================================== -->
-  <script>
-    const formatRp = (angka) => 'Rp ' + parseInt(angka || 0).toLocaleString('id-ID');
-    const formatDate = (isoString) => {
-      if(!isoString) return '-';
-      const d = new Date(isoString);
-      const months = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
-      return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
-    };
-
-    let windowTransactions = [];
-    let windowAccounts = [];
-    let windowCategories = [];
-    let appSettings = {};
-    let currentReportPeriod = '30days';
-    let currentTxFilter = 'all';
-    let currentType = 'in';
-    let selectedCategory = '';
-    let currentPayment = 'Non-Tunai';
-    let chartIncExpInst = null;
-    let chartBalanceInst = null;
-    let chartJamProduktifInst = null;
-    let globalReportData = null; // To store pie details
-
-    const i18n = {
-      id: { dash_subtitle: "Dashboard Utama", driver_dash: "Area Kerja", acc_list: "Daftar Rekening", manage: "Kelola", tot_asset: "Total Aset", accounts: "Rekening", largest: "Terbesar", today_profit: "Laba Operasional Hari Ini", income: "Pendapatan", expense: "Pengeluaran", perf: "Performa", daily_target: "Target Harian", set_target: "Atur Target", fin_act: "Aktivitas Finansial", record: "Catat", all: "Semua", today: "Hari Ini", yesterday: "Kemarin", report: "Laporan", net: "Laba Bersih", settings: "Pengaturan" },
-      en: { dash_subtitle: "Main Dashboard", driver_dash: "Workspace", acc_list: "Accounts List", manage: "Manage", tot_asset: "Total Assets", accounts: "Accounts", largest: "Largest", today_profit: "Today's Operational Profit", income: "Income", expense: "Expense", perf: "Performance", daily_target: "Daily Target", set_target: "Set Target", fin_act: "Financial Activity", record: "Record", all: "All", today: "Today", yesterday: "Yesterday", report: "Report", net: "Net Profit", settings: "Settings" },
-      su: { dash_subtitle: "Beranda Utama", driver_dash: "Area Damel", acc_list: "Daptar Rekening", manage: "Atur", tot_asset: "Total Aset", accounts: "Rekening", largest: "Pangageungna", today_profit: "Bati Operasional Dinten Ieu", income: "Pamasukan", expense: "Pangaluaran", perf: "Performa", daily_target: "Target Dinten Ieu", set_target: "Atur Target", fin_act: "Aktivitas Keuangan", record: "Catet", all: "Sadaya", today: "Dinten Ieu", yesterday: "Kamari", report: "Laporan", net: "Bati Bersih", settings: "Pangaturan" },
-      jv: { dash_subtitle: "Beranda Utama", driver_dash: "Area Kerjo", acc_list: "Daftar Rekening", manage: "Atur", tot_asset: "Total Aset", accounts: "Rekening", largest: "Paling Gede", today_profit: "Bati Operasional Dino Iki", income: "Pemasukan", expense: "Pengeluaran", perf: "Performa", daily_target: "Target Dino Iki", set_target: "Atur Target", fin_act: "Aktivitas Keuangan", record: "Catet", all: "Kabeh", today: "Dino Iki", yesterday: "Wingi", report: "Laporan", net: "Bati Bersih", settings: "Pengaturan" }
-    };
-
-    function applyLang(lang) {
-      if(!i18n[lang]) lang = 'id';
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        let key = el.getAttribute('data-i18n');
-        if(i18n[lang][key]) el.innerHTML = i18n[lang][key];
-      });
-    }
-
-    async function initApp() {
-      const now = new Date();
-      now.setHours(now.getHours() + 7);
-      document.getElementById('input-date').value = now.toISOString().split('T')[0];
-      document.getElementById('input-time').value = new Date().toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'});
-
-      await loadSettings();
-      loadCategories();
-      loadDashboardData();
-      loadTransactionsView();
-      loadFinancialReport(currentReportPeriod);
-      loadAnalisaView();
-      loadProjectionsView();
-    }
-
-    function switchView(viewName) {
-      document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-      document.querySelectorAll('.nav-item').forEach(el => { 
-        el.classList.remove('active'); 
-        el.classList.replace('text-grab', 'text-gray-400'); 
-      });
-      const viewEl = document.getElementById('view-' + viewName);
-      if(viewEl) viewEl.classList.add('active');
-      
-      const activeNav = document.getElementById('nav-' + viewName);
-      if(activeNav) { 
-        activeNav.classList.add('active'); 
-        activeNav.classList.replace('text-gray-400', 'text-grab'); 
-      }
-
-      if(viewName === 'dashboard') loadDashboardData();
-      if(viewName === 'driver') loadDriverDashboard();
-      if(viewName === 'transaksi') loadTransactionsView();
-      if(viewName === 'laporan') loadFinancialReport(currentReportPeriod);
-      if(viewName === 'analisa') loadAnalisaView();
-      if(viewName === 'rekening') { loadDashboardData(); loadCategoryManagementList(); }
-      if(viewName === 'proyeksi') loadProjectionsView();
-      if(viewName === 'input') switchInputTab('in');
-      
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function openModal(id) {
-      document.getElementById('modal-overlay').classList.add('show');
-      document.getElementById(id).classList.add('show');
-    }
-    
-    function closeAllModals() {
-      document.getElementById('modal-overlay').classList.remove('show');
-      document.querySelectorAll('.bottom-sheet').forEach(el => el.classList.remove('show'));
-    }
-
-    function openGlobalDetail(title, desc) {
-      const content = `
-        <h2 class="text-xl font-black text-gray-800 mb-2">${title}</h2>
-        <div class="h-px bg-gray-100 w-full mb-4"></div>
-        <div class="text-sm text-gray-600 leading-relaxed">${desc}</div>
-        <button onclick="closeAllModals()" class="w-full bg-gray-100 text-gray-800 font-bold py-3.5 rounded-xl text-sm mt-6 hover:bg-gray-200">Tutup</button>
-      `;
-      document.getElementById('global-detail-content').innerHTML = content;
-      openModal('modal-global-detail');
-    }
-
-    // ==========================================
-    // API: PENGATURAN (SETTINGS) & NOTIFIKASI
-    // ==========================================
-    async function loadSettings() {
-      try {
-        const res = await fetch('/api/settings');
-        appSettings = await res.json();
-        document.getElementById('set-username').value = appSettings.username || 'Gaska';
-        document.getElementById('dash-greeting').innerText = `Halo, ${appSettings.username || 'Gaska'} 🛵`;
-        document.getElementById('set-theme').value = appSettings.theme || 'light';
-        document.getElementById('set-lang').value = appSettings.language || 'id';
-        
-        if (appSettings.notifications) {
-           document.getElementById('set-notif-remind').checked = appSettings.notifications.reminder;
-           document.getElementById('set-notif-target').checked = appSettings.notifications.target;
-           document.getElementById('set-notif-review').checked = appSettings.notifications.review;
-        }
-
-        if(appSettings.theme === 'dark') document.body.classList.add('dark-mode'); else document.body.classList.remove('dark-mode');
-        applyLang(appSettings.language || 'id');
-      } catch (err) { console.error(err); }
-    }
-    
-    async function saveSettings() {
-      const payload = { 
-        username: document.getElementById('set-username').value, 
-        theme: document.getElementById('set-theme').value, 
-        language: document.getElementById('set-lang').value,
-        notifications: {
-           reminder: document.getElementById('set-notif-remind').checked,
-           target: document.getElementById('set-notif-target').checked,
-           review: document.getElementById('set-notif-review').checked
-        }
-      };
-      await fetch('/api/settings', { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload) });
-      loadSettings(); closeAllModals(); openGlobalDetail('Berhasil', 'Pengaturan telah disimpan dan diterapkan.');
-    }
-
-    async function restoreData(e) {
-      const file = e.target.files[0];
-      if(!file) return;
-      const reader = new FileReader();
-      reader.onload = async function(event) {
-        try {
-          const json = JSON.parse(event.target.result);
-          const res = await fetch('/api/restore', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(json) });
-          if(res.ok) { alert('Restore sukses! Halaman akan dimuat ulang.'); window.location.reload(); }
-        } catch(err) { alert('File JSON tidak valid!'); }
-      };
-      reader.readAsText(file);
-    }
-
-    // ==========================================
-    // 1. KATEGORI
-    // ==========================================
-    async function loadCategories() {
-      try {
-        const res = await fetch('/api/categories');
-        windowCategories = await res.json();
-        renderCategoryGrid(currentType);
-        loadCategoryManagementList();
-      } catch (err) { console.error(err); }
-    }
-
-    function renderCategoryGrid(type) {
-      const filtered = windowCategories.filter(c => c.type === type);
-      const grid = document.getElementById('dynamic-category-grid');
-      if(!grid) return;
-      
-      let html = '';
-      filtered.forEach((c, idx) => {
-        let isSelected = (selectedCategory === c.name || (idx === 0 && !selectedCategory));
-        if(isSelected && !selectedCategory) selectedCategory = c.name;
-        
-        html += `<button type="button" onclick="selectCategory(this, '${c.name}')" class="cat-btn flex flex-col items-center gap-1.5 p-3 rounded-xl border ${isSelected ? 'border-grab bg-green-50 ring-1 ring-grab' : 'border-gray-100 bg-gray-50'} text-left transition-all">
-                  <div class="w-8 h-8 rounded-full ${isSelected ? 'bg-grab text-white' : 'bg-white text-gray-400 shadow-sm'} flex items-center justify-center text-sm">
-                    <i class="fa-solid fa-${c.icon || 'tag'}"></i>
-                  </div>
-                  <span class="text-[9px] font-bold ${isSelected ? 'text-grab' : 'text-gray-600'} truncate w-full text-center">${c.name}</span>
-                 </button>`;
-      });
-      grid.innerHTML = html || '<p class="text-xs text-gray-400 col-span-3 text-center py-4">Kategori kosong.</p>';
-    }
-
-    function selectCategory(btn, catName) {
-      selectedCategory = catName;
-      renderCategoryGrid(currentType); 
-    }
-
-    function loadCategoryManagementList() {
-      let html = '';
-      windowCategories.forEach(c => {
-        html += `
-          <div class="p-4 rounded-2xl bg-white border border-gray-100 flex justify-between items-center text-xs interactive-card mb-2 shadow-sm" onclick="openGlobalDetail('Kategori: ${c.name}', 'Riwayat transaksi untuk kategori ini tersinkronisasi otomatis.')">
-            <div class="flex items-center gap-3">
-              <div class="w-9 h-9 rounded-full bg-gray-50 flex items-center justify-center text-gray-600 border border-gray-100">
-                <i class="fa-solid fa-${c.icon}"></i>
-              </div>
-              <div>
-                <p class="font-bold text-gray-800 text-sm mb-0.5">${c.name}</p>
-                <span class="text-[9px] font-bold ${c.type === 'in' ? 'text-grab' : 'text-red-400'} uppercase tracking-wider">${c.type === 'in' ? 'Pemasukan' : 'Pengeluaran'}</span>
-              </div>
-            </div>
-            <button onclick="event.stopPropagation(); deleteCategory('${c.id}')" class="text-gray-300 hover:text-red-500 bg-gray-50 w-8 h-8 rounded-full flex items-center justify-center transition-colors">
-              <i class="fa-solid fa-trash text-[10px]"></i>
-            </button>
-          </div>`;
-      });
-      const mgmtList = document.getElementById('category-management-list');
-      if(mgmtList) mgmtList.innerHTML = html;
-    }
-
-    async function saveCategory() {
-      const name = document.getElementById('cat-name').value;
-      const type = document.getElementById('cat-type').value;
-      const icon = document.getElementById('cat-icon').value;
-      if(!name) return openGlobalDetail('Validasi Gagal', 'Nama kategori wajib diisi!');
-      
-      await fetch('/api/categories', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, type, icon }) });
-      closeAllModals(); loadCategories();
-    }
-    
-    async function deleteCategory(id) {
-      await fetch(`/api/categories/${id}`, { method: 'DELETE' });
-      loadCategories();
-    }
-
-    // ==========================================
-    // 2. FORM TRANSAKSI & TIP
-    // ==========================================
-    function switchInputTab(t) {
-      currentType = t;
-      document.getElementById('tab-in').className = t === 'in' ? "flex-1 py-3 rounded-lg bg-white shadow-sm text-xs font-extrabold text-grab transition-all duration-200" : "flex-1 py-3 rounded-lg text-xs font-bold text-gray-500 transition-all duration-200";
-      document.getElementById('tab-out').className = t === 'out' ? "flex-1 py-3 rounded-lg bg-white shadow-sm text-xs font-extrabold text-red-500 transition-all duration-200" : "flex-1 py-3 rounded-lg text-xs font-bold text-gray-500 transition-all duration-200";
-      document.getElementById('tab-tf').className = t === 'transfer' ? "flex-1 py-3 rounded-lg bg-white shadow-sm text-xs font-extrabold text-blue-500 transition-all duration-200" : "flex-1 py-3 rounded-lg text-xs font-bold text-gray-500 transition-all duration-200";
-      
-      const srcAcc = document.getElementById('source-account-container');
-      const payContainer = document.getElementById('payment-method-container');
-      const tipContainer = document.getElementById('tip-container');
-      const areaTf = document.getElementById('area-transfer');
-      const catGrid = document.getElementById('dynamic-category-grid');
-      const custPaid = document.getElementById('customer-paid-container');
-
-      if(srcAcc) srcAcc.classList.toggle('hidden', t !== 'out');
-      if(payContainer) payContainer.classList.toggle('hidden', t !== 'in');
-      if(tipContainer) tipContainer.classList.toggle('hidden', t !== 'in');
-      if(areaTf) areaTf.classList.toggle('hidden', t !== 'transfer');
-      if(catGrid && catGrid.parentElement) catGrid.parentElement.classList.toggle('hidden', t === 'transfer');
-      
-      if(custPaid) {
-        if(t !== 'in' || currentPayment !== 'Tunai') custPaid.classList.add('hidden');
-        else custPaid.classList.remove('hidden');
-      }
-
-      if(t !== 'transfer') { selectedCategory = ''; renderCategoryGrid(t); }
-      document.getElementById('txt-amount-label').innerText = t === 'in' ? 'Total Pendapatan (Tanpa Tip)' : 'Total Nominal';
-    }
-
-    function selectPayment(m) {
-      currentPayment = m;
-      const btnNon = document.getElementById('btn-pm-nontunai');
-      const btnTunai = document.getElementById('btn-pm-tunai');
-      if(btnNon) btnNon.className = m === 'Non-Tunai' ? "flex-1 py-3.5 rounded-xl bg-green-50 ring-2 ring-grab text-grab font-extrabold text-[11px] transition-all shadow-sm" : "flex-1 py-3.5 rounded-xl bg-gray-50 border border-gray-200 text-gray-500 font-bold text-[11px] transition-all";
-      if(btnTunai) btnTunai.className = m === 'Tunai' ? "flex-1 py-3.5 rounded-xl bg-green-50 ring-2 ring-grab text-grab font-extrabold text-[11px] transition-all shadow-sm" : "flex-1 py-3.5 rounded-xl bg-gray-50 border border-gray-200 text-gray-500 font-bold text-[11px] transition-all";
-      
-      const custPaid = document.getElementById('customer-paid-container');
-      if (custPaid) {
-        if (m === 'Tunai') custPaid.classList.remove('hidden');
-        else { custPaid.classList.add('hidden'); document.getElementById('input-customer-paid').value = ''; }
-      }
-    }
-
-    function toggleTipForm() {
-      const isChecked = document.getElementById('toggle-tip').checked;
-      if (isChecked) document.getElementById('tip-form').classList.remove('hidden');
-      else { document.getElementById('tip-form').classList.add('hidden'); document.getElementById('input-tip-amount').value = ''; }
-    }
-
-    async function saveTransaction() {
-      const amount = document.getElementById('input-amount').value;
-      if(!amount || amount <= 0) return openGlobalDetail('Validasi Gagal', 'Masukkan nominal transaksi yang valid.');
-      
-      let payload = { 
-        type: currentType, category: selectedCategory || (currentType === 'transfer' ? 'Transfer' : 'Lainnya'), 
-        amount: amount, paymentMethod: currentPayment, note: document.getElementById('input-note').value,
-        date: document.getElementById('input-date').value, timestamp: document.getElementById('input-time').value
-      };
-      
-      if(currentType === 'out') {
-        payload.accountId = document.getElementById('select-source-acc').value;
-      } else if(currentType === 'in') {
-        if (currentPayment === 'Tunai') {
-          const custPaidInput = document.getElementById('input-customer-paid').value;
-          if(!custPaidInput) return openGlobalDetail('Validasi Gagal', 'Masukkan nominal uang tunai yang diberikan penumpang.');
-          payload.customerPaid = custPaidInput;
-        }
-        if (document.getElementById('toggle-tip').checked) {
-           payload.tipAmount = document.getElementById('input-tip-amount').value || 0;
-           payload.tipPaymentMethod = document.getElementById('select-tip-method').value;
-        }
-      } else if(currentType === 'transfer') { 
-        payload.fromAccountId = document.getElementById('tf-from').value; 
-        payload.toAccountId = document.getElementById('tf-to').value; 
-        if(payload.fromAccountId === payload.toAccountId) return openGlobalDetail('Validasi Gagal', 'Rekening sumber dan tujuan tidak boleh sama.');
-      }
-      
-      try {
-        const res = await fetch('/api/transactions', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-        if(res.ok) {
-          document.getElementById('input-amount').value = ''; document.getElementById('input-note').value = '';
-          if(document.getElementById('input-customer-paid')) document.getElementById('input-customer-paid').value = '';
-          document.getElementById('toggle-tip').checked = false; toggleTipForm();
-          await loadDashboardData(); await loadTransactionsView(); switchView('dashboard');
-        }
-      } catch (error) { openGlobalDetail('Error Sistem', 'Gagal menghubungi server.'); }
-    }
-
-    // ==========================================
-    // 3A. DASHBOARD UTAMA
-    // ==========================================
-    async function loadDashboardData() {
-      try {
-        const res = await fetch('/api/summary'); 
-        const data = await res.json();
-        windowAccounts = data.accounts;
-        
-        let accHtml = '';
-        let optHtml = '';
-        data.accounts.forEach(a => {
-          accHtml += `
-            <div class="acc-card bg-white rounded-[20px] premium-shadow p-5 border border-${a.color}-50 interactive-card" onclick="openAccountDetail('${a.id}')">
-              <div class="flex justify-between items-center mb-4">
-                 <p class="text-[11px] text-gray-500 font-bold uppercase tracking-widest flex items-center"><i class="fa-solid fa-${a.icon} text-${a.color}-500 mr-2 text-base"></i> ${a.name}</p>
-                 <div class="w-6 h-6 rounded-full bg-gray-50 flex items-center justify-center text-gray-400"><i class="fa-solid fa-angle-right text-[10px]"></i></div>
-              </div>
-              <p class="text-2xl font-black text-gray-900">${formatRp(a.balance)}</p>
-            </div>`;
-          optHtml += `<option value="${a.id}">${a.name} (${formatRp(a.balance)})</option>`;
-        });
-        document.getElementById('dashboard-accounts').innerHTML = accHtml;
-        
-        document.getElementById('dash-total-asset').innerText = formatRp(data.totalAssets);
-        document.getElementById('dash-acc-count').innerText = data.accountsCount + ' Aktif';
-        document.getElementById('dash-largest-acc').innerText = data.largestAccount;
-        document.getElementById('dash-laba').innerText = formatRp(data.todayStats.net);
-        document.getElementById('dash-pendapatan').innerText = formatRp(data.todayStats.in);
-        document.getElementById('dash-pengeluaran').innerText = '-' + formatRp(data.todayStats.out);
-        document.getElementById('dash-trip').innerHTML = `<i class="fa-solid fa-motorcycle mr-1"></i>${data.todayStats.trips} Trip Hari Ini`;
-        
-        document.getElementById('dash-target-text').innerText = formatRp(data.target);
-        document.getElementById('input-target').value = data.target;
-        let pct = data.target > 0 ? Math.round((data.todayStats.in / data.target) * 100) : 0;
-        document.getElementById('dash-target-bar').style.width = Math.min(100, pct) + '%';
-        document.getElementById('dash-target-percent').innerText = pct + '%';
-        document.getElementById('dash-target-info-1').innerText = data.todayStats.in >= data.target ? "🎉 Selesai!" : "Sisa: " + formatRp(data.target - data.todayStats.in);
-        
-        if(document.getElementById('select-source-acc')) document.getElementById('select-source-acc').innerHTML = optHtml; 
-        if(document.getElementById('tf-from')) document.getElementById('tf-from').innerHTML = optHtml; 
-        if(document.getElementById('tf-to')) document.getElementById('tf-to').innerHTML = optHtml;
-        
-        renderRekeningListView(data.accounts);
-      } catch(err) {}
-    }
-
-    // ==========================================
-    // 3B. DASHBOARD DRIVER (FITUR BARU)
-    // ==========================================
-    async function loadDriverDashboard() {
-      try {
-        const res = await fetch('/api/driver-dashboard');
-        const data = await res.json();
-        const s = data.stats;
-
-        document.getElementById('drv-total-trip').innerText = s.totalTrip;
-        document.getElementById('drv-selesai').innerText = `${s.tripSelesai} Selesai`;
-        document.getElementById('drv-batal').innerText = `${s.tripBatal} Dibatalkan`;
-        
-        let hrs = Math.floor(s.jamOnlineMins / 60);
-        let mns = s.jamOnlineMins % 60;
-        document.getElementById('drv-waktu-online').innerText = `${hrs}j ${mns}m`;
-        
-        document.getElementById('drv-pendapatan').innerText = formatRp(s.pendapatan);
-        document.getElementById('drv-laba-bersih').innerText = formatRp(s.labaBersih);
-        document.getElementById('drv-total-tip').innerText = formatRp(s.totalTip);
-        
-        let avgTrip = s.tripSelesai > 0 ? (s.pendapatan / s.tripSelesai) : 0;
-        let avgJam = (s.jamOnlineMins > 0) ? (s.pendapatan / (s.jamOnlineMins / 60)) : 0;
-        document.getElementById('drv-avg-trip').innerText = formatRp(avgTrip);
-        document.getElementById('drv-avg-jam').innerText = formatRp(avgJam);
-        
-        document.getElementById('drv-peak-hour').innerText = data.peakHour;
-        document.getElementById('drv-ai-summary').innerText = data.aiSummary;
-
-        // Render Grafik Jam Produktif
-        const ctxJam = document.getElementById('chartJamProduktif');
-        if (ctxJam) {
-           if (chartJamProduktifInst) chartJamProduktifInst.destroy();
-           let labels = Array.from({length: 24}, (_, i) => `${i}:00`);
-           chartJamProduktifInst = new Chart(ctxJam.getContext('2d'), {
-              type: 'bar', data: { labels: labels, datasets: [{ label: 'Pendapatan (Rp)', data: s.jamProduktifData, backgroundColor: '#00B14F', borderRadius: 4 }] },
-              options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { maxTicksLimit: 6 } } } }
-           });
-        }
-      } catch (e) { console.error(e); }
-    }
-
-    async function prosesTutupBuku() {
-       if(!confirm("Yakin ingin merekam dan menutup buku harian hari ini?")) return;
-       const res = await fetch('/api/tutup-buku', { method: 'POST' });
-       if(res.ok) {
-          const dt = await res.json();
-          openGlobalDetail('Buku Berhasil Ditutup', dt.archive.summary + '<br><br>Laporan harian ini telah diarsipkan secara permanen dalam database Anda.');
-       }
-    }
-
-    // ==========================================
-    // REKENING & MODAL MANAJEMEN
-    // ==========================================
-    function renderRekeningListView(accounts) {
-      let totalAssets = accounts.reduce((s, a) => s + a.balance, 0);
-      let html = '';
-      accounts.forEach(a => {
-        let pct = totalAssets > 0 ? Math.round((a.balance / totalAssets) * 100) : 0;
-        html += `
-          <div class="p-5 rounded-[20px] bg-white border border-gray-100 shadow-sm interactive-card mb-3" onclick="openAccountDetail('${a.id}')">
-            <div class="flex justify-between items-center mb-3">
-              <span class="font-extrabold text-sm text-gray-800 flex items-center">
-                 <div class="w-8 h-8 rounded-full bg-${a.color}-50 text-${a.color}-500 flex items-center justify-center mr-3"><i class="fa-solid fa-${a.icon} text-xs"></i></div>
-                 ${a.name}
-              </span>
-              <span class="font-black text-sm text-gray-900">${formatRp(a.balance)}</span>
-            </div>
-            <div class="flex items-center gap-3">
-               <div class="w-full bg-gray-100 rounded-full h-1.5 overflow-hidden">
-                 <div class="bg-grab h-1.5 rounded-full" style="width: ${pct}%"></div>
-               </div>
-               <span class="text-[9px] text-gray-400 font-bold w-6 text-right">${pct}%</span>
-            </div>
-          </div>`;
-      });
-      const rList = document.getElementById('rekening-list');
-      if(rList) rList.innerHTML = html;
-    }
-
-    async function openAccountDetail(id) {
-      const res = await fetch(`/api/accounts/${id}`);
-      const data = await res.json();
-      const a = data.account;
-      
-      let mutasiHtml = '';
-      if(data.mutasi.length === 0) mutasiHtml = '<p class="text-xs text-gray-400 text-center py-4">Belum ada riwayat mutasi.</p>';
-      data.mutasi.reverse().forEach(t => {
-        let isMasuk = t.accountId === a.id && (t.type === 'in' || t.type === 'adjustment' && t.amount > 0) || (t.type === 'transfer' && t.toAccountId === a.id);
-        mutasiHtml += `
-          <div class="flex justify-between items-center py-3 border-b border-gray-50 interactive-card" onclick="openTxDetail('${t.id}')">
-             <div>
-                <p class="font-bold text-xs text-gray-800 mb-0.5">${t.category}</p>
-                <p class="text-[9px] text-gray-400">${t.date} • ${t.timestamp}</p>
-             </div>
-             <p class="font-extrabold text-xs ${isMasuk ? 'text-grab' : 'text-gray-900'}">${isMasuk ? '+' : '-'}${formatRp(Math.abs(t.amount))}</p>
-          </div>
-        `;
-      });
-
-      const content = `
-        <div class="flex items-center justify-between mb-6">
-           <div class="w-12 h-12 rounded-full bg-${a.color}-50 text-${a.color}-500 flex items-center justify-center text-xl border border-${a.color}-100"><i class="fa-solid fa-${a.icon}"></i></div>
-           <button onclick="closeAllModals()" class="w-8 h-8 bg-gray-100 rounded-full text-gray-500"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">${a.name}</p>
-        <h2 class="text-4xl font-black text-gray-900 mb-6 tracking-tight">${formatRp(a.balance)}</h2>
-        
-        <div class="grid grid-cols-2 gap-3 mb-6">
-           <button onclick="document.getElementById('acc-adj-form').classList.toggle('hidden')" class="bg-gray-900 text-white py-3 rounded-xl text-xs font-bold shadow-md"><i class="fa-solid fa-pen mr-1"></i> Sesuaikan Saldo</button>
-           <button onclick="deleteAccount('${a.id}')" class="bg-red-50 text-red-500 border border-red-100 py-3 rounded-xl text-xs font-bold"><i class="fa-solid fa-trash mr-1"></i> Hapus Dompet</button>
-        </div>
-        
-        <div id="acc-adj-form" class="hidden bg-gray-50 p-4 rounded-xl mb-6 border border-gray-200">
-           <p class="text-[10px] text-gray-500 font-bold uppercase mb-2">Masukkan Nominal Saldo Asli Saat Ini</p>
-           <div class="flex gap-2">
-             <input type="number" id="adj-balance-input" value="${a.balance}" class="w-full bg-white border border-gray-300 rounded-lg py-2 px-3 text-sm font-bold focus:outline-none">
-             <button onclick="adjustAccountBalance('${a.id}')" class="bg-grab text-white px-4 rounded-lg text-xs font-bold shadow-sm">Ubah</button>
-           </div>
-        </div>
-
-        <h3 class="text-[11px] font-bold text-gray-500 uppercase tracking-wide mb-2 border-b border-gray-100 pb-2">Mutasi Rekening</h3>
-        <div class="space-y-1">${mutasiHtml}</div>
-      `;
-      document.getElementById('acc-detail-content').innerHTML = content;
-      openModal('modal-acc-detail');
-    }
-
-    async function adjustAccountBalance(id) {
-      const newBal = document.getElementById('adj-balance-input').value;
-      await fetch(`/api/accounts/${id}`, { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({balance: newBal}) });
-      loadDashboardData();
-      openAccountDetail(id);
-    }
-    
-    async function deleteAccount(id) {
-       const res = await fetch(`/api/accounts/${id}`, { method: 'DELETE' });
-       if(res.ok) { closeAllModals(); loadDashboardData(); }
-       else { const data = await res.json(); openGlobalDetail('Gagal', data.error); }
-    }
-
-    async function saveAccount() {
-      let name = document.getElementById('acc-name').value; 
-      let balance = document.getElementById('acc-balance').value;
-      if(!name) return;
-      await fetch('/api/accounts', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, balance }) });
-      closeAllModals(); loadDashboardData();
-    }
-    async function saveTarget() {
-      let target = document.getElementById('input-target').value;
-      await fetch('/api/target', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ target }) });
-      closeAllModals(); loadDashboardData();
-    }
-
-    // ==========================================
-    // 4. TIMELINE, FILTER & EDIT FULL
-    // ==========================================
-    async function loadTransactionsView() {
-      let url = '/api/transactions';
-      let params = [];
-      if (currentTxFilter && currentTxFilter !== 'all') params.push(`filter=${currentTxFilter}`);
-      
-      const searchInput = document.getElementById('search-tx-input');
-      const q = searchInput ? searchInput.value.trim() : '';
-      if (q) params.push(`search=${encodeURIComponent(q)}`);
-
-      if (params.length > 0) url += '?' + params.join('&');
-
-      try {
-        const res = await fetch(url); 
-        if(!res.ok) throw new Error("Gagal mengambil data transaksi");
-        const txs = await res.json();
-        windowTransactions = txs;
-        renderGroupedTimeline(txs);
-      } catch (err) { console.error("Gagal memuat timeline:", err); }
-    }
-
-    function setTxFilter(f, btn) {
-      currentTxFilter = f;
-      document.querySelectorAll('.tx-filter-btn').forEach(b => {
-        b.className = "tx-filter-btn px-4 py-2 rounded-xl bg-white border border-gray-200 text-gray-600 text-xs font-bold transition-all shadow-sm interactive-card";
-      });
-      if(btn) btn.className = "tx-filter-btn px-4 py-2 rounded-xl bg-grab text-white text-xs font-bold transition-all shadow-sm";
-      loadTransactionsView();
-    }
-
-    function filterTransactions() { loadTransactionsView(); }
-
-    function renderGroupedTimeline(txs) {
-      const container = document.getElementById('grouped-timeline-container');
-      if(!container) return;
-      
-      if(!txs || !txs.length) { 
-        container.innerHTML = `
-          <div class="flex flex-col items-center justify-center py-12 text-center bg-white rounded-3xl border border-gray-100">
-            <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center text-gray-300 text-2xl mb-4"><i class="fa-solid fa-receipt"></i></div>
-            <p class="text-sm font-bold text-gray-600 mb-1">Riwayat Kosong</p>
-            <p class="text-[10px] text-gray-400">Tidak ada aktivitas transaksi pada filter ini.</p>
-          </div>`; 
-        return; 
-      }
-      
-      const grouped = {};
-      txs.forEach(t => { if(!grouped[t.date]) grouped[t.date] = []; grouped[t.date].push(t); });
-      let html = '';
-      const sortedDates = Object.keys(grouped).sort((a, b) => new Date(b) - new Date(a));
-      
-      for(const date of sortedDates) {
-        html += `
-          <div class="mb-5">
-            <div class="flex items-center gap-3 mb-3 px-2">
-              <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">${formatDate(date)}</p>
-              <div class="h-px bg-gray-200 flex-1"></div>
-            </div>
-            <div class="space-y-2">`;
-        
-        grouped[date].forEach(t => {
-          let isMasuk = t.type === 'in' || t.type === 'transfer' || (t.type==='adjustment' && t.amount > 0);
-          let tipHtml = t.tipAmount > 0 ? `<p class="text-[9px] text-pink-500 font-bold mt-0.5"><i class="fa-solid fa-gift"></i> Tip: Rp ${t.tipAmount.toLocaleString('id-ID')}</p>` : '';
-          
-          html += `
-            <div onclick="openTxDetail('${t.id}')" class="bg-white rounded-2xl p-4 premium-shadow border border-gray-50 flex justify-between items-center cursor-pointer interactive-card">
-              <div class="flex items-center gap-3.5">
-                <div class="w-10 h-10 rounded-full ${t.type === 'transfer' ? 'bg-blue-50 text-blue-500' : (isMasuk ? 'bg-green-50 text-grab' : 'bg-red-50 text-red-500')} flex items-center justify-center text-base border border-white shadow-sm">
-                  <i class="fa-solid ${t.type === 'transfer' ? 'fa-money-bill-transfer' : (isMasuk ? 'fa-arrow-down' : 'fa-arrow-up')}"></i>
-                </div>
-                <div>
-                  <p class="font-extrabold text-gray-800 text-sm mb-0.5">${t.category}</p>
-                  <p class="text-[10px] text-gray-400 font-medium">${t.timestamp} <span class="mx-0.5">•</span> ${t.paymentMethod || 'Saldo'}</p>
-                  ${tipHtml}
-                </div>
-              </div>
-              <div class="text-right">
-                <p class="font-black ${t.type === 'transfer' ? 'text-gray-900' : (isMasuk ? 'text-grab' : 'text-red-500')} text-sm tracking-tight">
-                  ${t.type === 'transfer' ? '' : (isMasuk ? '+' : '-')}${formatRp(Math.abs(t.amount))}
-                </p>
-              </div>
-            </div>`;
-        });
-        html += `</div></div>`;
-      }
-      container.innerHTML = html;
-    }
-
-    async function openTxDetail(id) {
-      const res = await fetch(`/api/transactions/${id}`);
-      const t = await res.json();
-      if(t.error) return;
-      
-      const isMasuk = t.type === 'in' || (t.type==='adjustment' && t.amount>0);
-      const isTf = t.type === 'transfer';
-      const color = isTf ? 'blue' : (isMasuk ? 'grab' : 'red-500');
-      const safeData = JSON.stringify(t).replace(/'/g, "\\'").replace(/"/g, '&quot;');
-      const tipRow = t.tipAmount > 0 ? `<div class="flex justify-between"><span class="text-xs text-gray-500 font-medium">Tip Pelanggan</span><span class="text-xs font-bold text-pink-500">${formatRp(t.tipAmount)} (${t.tipPaymentMethod})</span></div>` : '';
-      
-      const content = `
-        <div class="flex justify-between items-start mb-6">
-           <div class="w-12 h-12 rounded-full ${isTf ? 'bg-blue-50 text-blue-500' : (isMasuk ? 'bg-green-50 text-grab' : 'bg-red-50 text-red-500')} flex items-center justify-center text-xl border border-white shadow-sm"><i class="fa-solid ${isTf ? 'fa-money-bill-transfer' : (isMasuk ? 'fa-arrow-down' : 'fa-arrow-up')}"></i></div>
-           <button onclick="closeAllModals()" class="w-8 h-8 bg-gray-100 rounded-full text-gray-500"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">${t.category}</p>
-        <h2 class="text-4xl font-black text-${color} mb-6 tracking-tight">${isTf ? '' : (isMasuk ? '+' : '-')}${formatRp(Math.abs(t.amount))}</h2>
-        
-        <div class="bg-gray-50 rounded-2xl p-4 border border-gray-100 mb-6 space-y-4">
-           <div class="flex justify-between"><span class="text-xs text-gray-500 font-medium">Waktu</span><span class="text-xs font-bold text-gray-900">${formatDate(t.date)} • ${t.timestamp}</span></div>
-           <div class="flex justify-between"><span class="text-xs text-gray-500 font-medium">Metode</span><span class="text-xs font-bold text-gray-900">${t.paymentMethod || 'Saldo Dompet'}</span></div>
-           ${tipRow}
-           ${t.type === 'in' && t.paymentMethod === 'Tunai' ? `<div class="flex justify-between"><span class="text-xs text-gray-500 font-medium">Fisik Penumpang</span><span class="text-xs font-bold text-gray-900">${formatRp(t.customerPaid)}</span></div>` : ''}
-           <div class="flex justify-between"><span class="text-xs text-gray-500 font-medium">Catatan</span><span class="text-xs font-bold text-gray-900 text-right max-w-[60%]">${t.note || '-'}</span></div>
-        </div>
-        
-        <div class="grid grid-cols-2 gap-3">
-           <button onclick="openEditTx('${safeData}')" class="bg-gray-900 text-white font-bold py-3.5 rounded-xl text-xs shadow-md"><i class="fa-solid fa-pen mr-1"></i> Edit Data</button>
-           <button onclick="deleteTransaction('${t.id}')" class="bg-red-50 text-red-600 border border-red-100 font-bold py-3.5 rounded-xl text-xs"><i class="fa-solid fa-trash mr-1"></i> Hapus</button>
-        </div>
-      `;
-      document.getElementById('tx-detail-content').innerHTML = content;
-      openModal('modal-tx-detail');
-    }
-
-    function openEditTx(safeData) {
-       const t = JSON.parse(safeData.replace(/&quot;/g, '"'));
-       closeAllModals(); setTimeout(() => {
-         document.getElementById('edit-tx-id').value = t.id;
-         document.getElementById('edit-tx-type').value = t.type;
-         document.getElementById('edit-tx-date').value = t.date;
-         document.getElementById('edit-tx-time').value = t.timestamp;
-         document.getElementById('edit-tx-category').value = t.category;
-         document.getElementById('edit-tx-amount').value = t.amount;
-         document.getElementById('edit-tx-note').value = t.note;
-         
-         const tipSec = document.getElementById('edit-tip-section');
-         if(t.type === 'in') {
-            tipSec.classList.remove('hidden');
-            document.getElementById('edit-tx-tip-amount').value = t.tipAmount || 0;
-            document.getElementById('edit-tx-tip-method').value = t.tipPaymentMethod || 'Non-Tunai';
-         } else { tipSec.classList.add('hidden'); }
-         
-         openModal('modal-edit-tx');
-       }, 300);
-    }
-
-    async function submitEditTransaction() {
-      const id = document.getElementById('edit-tx-id').value;
-      const payload = {
-        date: document.getElementById('edit-tx-date').value, 
-        timestamp: document.getElementById('edit-tx-time').value,
-        category: document.getElementById('edit-tx-category').value, 
-        amount: document.getElementById('edit-tx-amount').value, 
-        note: document.getElementById('edit-tx-note').value
-      };
-      if (document.getElementById('edit-tx-type').value === 'in') {
-        payload.tipAmount = document.getElementById('edit-tx-tip-amount').value;
-        payload.tipPaymentMethod = document.getElementById('edit-tx-tip-method').value;
-      }
-      
-      const res = await fetch(`/api/transactions/${id}`, { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload) });
-      if(res.ok) { closeAllModals(); loadTransactionsView(); loadDashboardData(); loadFinancialReport(currentReportPeriod); }
-    }
-
-    async function deleteTransaction(id) {
-       const res = await fetch(`/api/transactions/${id}`, { method: 'DELETE' });
-       if(res.ok) { 
-         closeAllModals(); 
-         loadTransactionsView(); 
-         loadDashboardData(); 
-         loadFinancialReport(currentReportPeriod); 
-       }
-    }
-
-    // ==========================================
-    // 5. FINANCIAL HUB & CHARTS (DENGAN INTERAKTIVITAS PIE CHART)
-    // ==========================================
-    function applyCustomReportFilter() { const m = document.getElementById('filter-month').value; if(m) { currentReportPeriod = m; loadFinancialReport(m); } }
-    function applyCustomDateFilter() { const d = document.getElementById('filter-date').value; if(d) { currentReportPeriod = d; loadFinancialReport(null, d); } }
-
-    function setReportPeriod(period, btn) {
-      currentReportPeriod = period;
-      document.querySelectorAll('.rep-filter-btn').forEach(b => {
-        b.className = "rep-filter-btn px-4 py-2 rounded-xl bg-white border border-gray-200 text-gray-600 text-xs font-bold transition interactive-card";
-      });
-      if(btn) {
-        btn.className = "rep-filter-btn px-4 py-2 rounded-xl bg-grab text-white text-xs font-bold transition interactive-card shadow-sm";
-      }
-      document.getElementById('filter-month').value = ''; 
-      document.getElementById('filter-date').value = '';
-      loadFinancialReport(period);
-    }
-
-    async function loadFinancialReport(period, exactDate = null) {
-      let url = `/api/financial-report?period=${period || currentReportPeriod}`;
-      if(exactDate) url = `/api/financial-report?exactDate=${exactDate}`;
-
-      const res = await fetch(url);
-      const data = await res.json();
-      globalReportData = data; // Simpan untuk referensi event click chart
-      
-      document.getElementById('rep-total-assets').innerText = formatRp(data.summary.totalAssets);
-      document.getElementById('rep-income').innerText = formatRp(data.summary.totalIncome);
-      document.getElementById('rep-expense').innerText = '-' + formatRp(data.summary.totalExpense);
-      document.getElementById('rep-net').innerText = formatRp(data.summary.netProfit);
-      
-      renderReportCharts(data.charts || { dailyTrend: [], pieIncome: {}, pieExpense: {} });
-      renderReportHistoryList(data.history || []);
-    }
-
-    function renderReportCharts(charts) {
-      const trend = charts.dailyTrend || [];
-      const labels = trend.map(d => {
-        const dObj = new Date(d.date); const m = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
-        return `${dObj.getDate()} ${m[dObj.getMonth()]}`;
-      });
-      const net = trend.map(d => d.net);
-
-      const ctxLine = document.getElementById('chartBalanceLine');
-      if(ctxLine) {
-        if(chartBalanceInst) chartBalanceInst.destroy();
-        chartBalanceInst = new Chart(ctxLine.getContext('2d'), {
-          type: 'line', data: { labels, datasets: [{ label: 'Cash Flow', data: net, borderColor: '#00B14F', tension: 0.4, fill: true, backgroundColor: 'rgba(0,177,79,0.1)' }] }, 
-          options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { display: false } }, y: { border: { dash: [4, 4] } } } }
-        });
-      }
-
-      // Interaktivitas Pie Chart Pemasukan
-      const incKeys = Object.keys(charts.pieIncome || {}); const incVals = Object.values(charts.pieIncome || {});
-      if(document.getElementById('pieIncome')) {
-        let chartInc = Chart.getChart('pieIncome'); if(chartInc) chartInc.destroy();
-        new Chart(document.getElementById('pieIncome').getContext('2d'), { 
-          type: 'doughnut', 
-          data: { labels: incKeys, datasets: [{ data: incVals, backgroundColor: ['#00B14F', '#06b6d4', '#ec4899', '#f59e0b', '#8b5cf6'] }] }, 
-          options: { 
-            responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
-            onClick: (e, activeElements, chart) => {
-              if (activeElements.length > 0) {
-                const label = chart.data.labels[activeElements[0].index];
-                const detailArr = globalReportData.charts.pieDetailsIncome[label];
-                showPieDetailsModal(label, detailArr, 'in');
-              }
-            }
-          } 
-        });
-      }
-
-      // Interaktivitas Pie Chart Pengeluaran
-      const expKeys = Object.keys(charts.pieExpense || {}); const expVals = Object.values(charts.pieExpense || {});
-      if(document.getElementById('pieExpense')) {
-        let chartExp = Chart.getChart('pieExpense'); if(chartExp) chartExp.destroy();
-        new Chart(document.getElementById('pieExpense').getContext('2d'), { 
-          type: 'doughnut', 
-          data: { labels: expKeys, datasets: [{ data: expVals, backgroundColor: ['#ef4444', '#f97316', '#eab308', '#64748b', '#8b5cf6'] }] }, 
-          options: { 
-            responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
-            onClick: (e, activeElements, chart) => {
-              if (activeElements.length > 0) {
-                const label = chart.data.labels[activeElements[0].index];
-                const detailArr = globalReportData.charts.pieDetailsExpense[label];
-                showPieDetailsModal(label, detailArr, 'out');
-              }
-            }
-          } 
-        });
-      }
-    }
-
-    function showPieDetailsModal(category, detailsArray, type) {
-      if(!detailsArray || detailsArray.length === 0) return;
-      let total = detailsArray.reduce((sum, tx) => sum + tx.amount, 0);
-      let isMasuk = type === 'in';
-      let html = `<h2 class="text-xl font-black text-gray-800 mb-1">Rincian: ${category}</h2>
-                  <p class="text-xs text-gray-500 mb-4 font-bold uppercase tracking-widest">Total: ${formatRp(total)}</p>
-                  <div class="max-h-[50vh] overflow-y-auto pr-2">`;
-      
-      detailsArray.sort((a,b) => new Date(b.date+'T'+b.timestamp) - new Date(a.date+'T'+a.timestamp)).forEach(tx => {
-         html += `<div class="flex justify-between items-center py-3 border-b border-gray-50">
-           <div><p class="text-xs font-bold text-gray-800">${formatDate(tx.date)}</p><p class="text-[9px] text-gray-400">${tx.timestamp} ${tx.note ? '• '+tx.note : ''}</p></div>
-           <p class="text-xs font-bold ${isMasuk?'text-grab':'text-red-500'}">${isMasuk?'+':'-'}${formatRp(tx.amount)}</p>
-         </div>`;
-      });
-      html += `</div><button onclick="closeAllModals()" class="w-full bg-gray-900 text-white font-bold py-3.5 rounded-xl text-sm shadow-md mt-6">Tutup Rincian</button>`;
-      
-      document.getElementById('global-detail-content').innerHTML = html;
-      openModal('modal-global-detail');
-    }
-    
-    // Penyempurnaan Tampilan Buku Kas Histori Harian
-    function renderReportHistoryList(historyData) {
-      let html = '';
-      historyData.forEach(d => {
-        const safeDetails = JSON.stringify(d.details).replace(/'/g, "\\'").replace(/"/g, '&quot;');
-        html += `
-          <div class="flex justify-between items-center py-3 border-b border-gray-50 interactive-card" onclick="openDailyReport('${d.date}', ${d.net}, ${d.in}, ${d.out}, ${d.trips}, '${safeDetails}')">
-            <div>
-              <p class="font-bold text-xs text-gray-800 mb-0.5">${formatDate(d.date)}</p>
-              <p class="text-[9px] text-gray-400">${d.txCount} Aktivitas <span class="mx-1">•</span> <i class="fa-solid fa-motorcycle text-grab"></i> ${d.trips} Trip</p>
-            </div>
-            <div class="text-right">
-              <p class="font-extrabold text-sm ${d.net >= 0 ? 'text-grab' : 'text-red-500'} tracking-tight">${d.net >= 0 ? '+' : '-'}${formatRp(Math.abs(d.net))}</p>
-            </div>
-          </div>`;
-      });
-      document.getElementById('rep-history-list').innerHTML = html || '<p class="text-xs text-center text-gray-400 py-4">Belum ada riwayat harian.</p>';
-    }
-
-    function openDailyReport(date, net, incoming, out, trips, safeDetails) {
-       const details = JSON.parse(safeDetails.replace(/&quot;/g, '"'));
-       let listHtml = '';
-       
-       // Diurutkan seperti buku kas (terbaru di bawah atau atas)
-       details.sort((a,b) => a.timestamp.localeCompare(b.timestamp)).forEach(tx => {
-          let isMasuk = tx.type === 'in';
-          listHtml += `<div class="flex justify-between items-center py-2.5 border-b border-gray-50">
-             <div><p class="text-xs font-bold text-gray-800">${tx.category}</p><p class="text-[9px] text-gray-400">${tx.timestamp} ${tx.note ? '• '+tx.note : ''}</p></div>
-             <p class="text-xs font-bold ${isMasuk?'text-grab':'text-red-500'}">${isMasuk?'+':'-'}${formatRp(tx.amount)}</p>
-          </div>`;
-          if (tx.tipAmount > 0) {
-            listHtml += `<div class="flex justify-between items-center py-2.5 border-b border-gray-50">
-               <div><p class="text-xs font-bold text-pink-500">Tip Pelanggan</p><p class="text-[9px] text-pink-300">${tx.timestamp}</p></div>
-               <p class="text-xs font-bold text-pink-500">+${formatRp(tx.tipAmount)}</p>
-            </div>`;
-          }
-       });
-
-       const content = `
-        <h2 class="text-xl font-black text-gray-800 mb-1">Rincian Buku Kas</h2>
-        <p class="text-xs text-gray-500 mb-4 font-bold uppercase tracking-widest">${formatDate(date)}</p>
-        <div class="bg-gray-50 rounded-2xl p-4 mb-4 border border-gray-100">
-           <h3 class="text-3xl font-black ${net >= 0 ? 'text-grab' : 'text-red-500'} tracking-tight mb-3">${net >= 0 ? '+' : '-'}${formatRp(Math.abs(net))}</h3>
-           <div class="grid grid-cols-2 gap-3 pt-3 border-t border-gray-200">
-              <div><p class="text-[9px] text-gray-400 uppercase font-bold">Pemasukan</p><p class="font-bold text-gray-900 text-sm">${formatRp(incoming)}</p></div>
-              <div><p class="text-[9px] text-gray-400 uppercase font-bold">Pengeluaran</p><p class="font-bold text-gray-900 text-sm">${formatRp(out)}</p></div>
-           </div>
-        </div>
-        <p class="text-[10px] font-bold text-gray-800 mb-3 bg-green-50 text-grab px-3 py-2 rounded-lg inline-block"><i class="fa-solid fa-motorcycle mr-1"></i> ${trips} Trip Terselesaikan</p>
-        <div class="max-h-[35vh] overflow-y-auto pr-2 bg-white rounded-xl">${listHtml}</div>
-        <button onclick="closeAllModals()" class="w-full bg-gray-900 text-white font-bold py-3.5 rounded-xl text-sm shadow-md mt-5">Tutup Rincian</button>
-       `;
-       document.getElementById('global-detail-content').innerHTML = content;
-       openModal('modal-global-detail');
-    }
-
-    // ==========================================
-    // 6. AI INSIGHTS & PROJECTIONS
-    // ==========================================
-    async function loadAnalisaView() {
-      const res = await fetch('/api/analytics-deep'); 
-      const data = await res.json();
-      document.getElementById('health-score-num').innerText = data.healthScore;
-      document.getElementById('health-score-desc').innerText = data.explanation;
-      
-      let html = '';
-      data.insights.forEach((ins) => {
-        const color = ins.type === 'positive' ? 'grab' : 'orange-500';
-        const bg = ins.type === 'positive' ? 'green-50' : 'orange-50';
-        
-        html += `
-          <div class="p-4 bg-${bg} border border-${color.split('-')[0]}-100 rounded-2xl mb-3 interactive-card" onclick="openGlobalDetail('${ins.title}', '${ins.desc}<br><br><b>Saran AI:</b> ${ins.recommendation}')">
-            <div class="flex justify-between items-start mb-1.5">
-               <p class="font-extrabold text-gray-900 text-sm"><i class="fa-solid fa-${ins.icon} text-${color} mr-1.5"></i> ${ins.title}</p>
-               <div class="w-6 h-6 rounded-full bg-white flex items-center justify-center text-gray-400 shadow-sm"><i class="fa-solid fa-angle-right text-[10px]"></i></div>
-            </div>
-            <p class="text-[11px] text-gray-600 font-medium leading-relaxed">${ins.desc}</p>
-          </div>
-        `;
-      });
-      document.getElementById('analisa-insights-list').innerHTML = html;
-    }
-
-    // Proyeksi & Target
-    async function loadProjectionsView() {
-      const res = await fetch('/api/goals'); 
-      const data = await res.json();
-      
-      let html = '';
-      data.goals.forEach(g => {
-        html += `
-          <div class="bg-white rounded-2xl premium-shadow p-5 border border-gray-100 mb-3">
-             <div class="flex justify-between items-center mb-3">
-                <span class="font-extrabold text-sm text-gray-800">${g.name}</span>
-                <span class="font-black text-sm text-gray-900">${g.progress}%</span>
-             </div>
-             <div class="w-full bg-gray-100 rounded-full h-1.5 mb-2 overflow-hidden"><div class="bg-indigo-500 h-1.5 rounded-full" style="width: ${g.progress}%"></div></div>
-             <div class="flex justify-between mb-3 border-b border-gray-50 pb-3">
-                <span class="text-[9px] text-gray-400 font-bold uppercase tracking-widest">Terkumpul: ${formatRp(g.currentAmount)}</span>
-                <span class="text-[9px] text-gray-400 font-bold uppercase tracking-widest">Target: ${formatRp(g.targetAmount)}</span>
-             </div>
-             
-             <!-- AI Info (Target harian/mingguan) -->
-             <div class="text-[10px] text-gray-500 mb-4 leading-relaxed">
-                Target Nabung: <span class="font-bold text-indigo-500">${formatRp(g.dailyTarget)} /hari</span> atau <span class="font-bold text-indigo-500">${formatRp(g.weeklyTarget)} /minggu</span>.<br>
-                Estimasi Selesai: <span class="font-bold text-gray-800">${g.estimatedCompletion !== '-' ? formatDate(g.estimatedCompletion) : 'Belum bisa diestimasi (Saldo Rp0)'}</span>
-             </div>
-             
-             <div class="grid grid-cols-2 gap-2">
-                <button onclick="editGoalData('${g.id}', '${g.name}', ${g.targetAmount}, ${g.monthlyTarget})" class="bg-gray-100 text-gray-600 rounded-lg py-2.5 text-[10px] font-bold"><i class="fa-solid fa-pen mr-1"></i> Edit Detail</button>
-                <button onclick="updateGoalBalance('${g.id}', ${g.currentAmount})" class="bg-indigo-50 text-indigo-600 rounded-lg py-2.5 text-[10px] font-bold"><i class="fa-solid fa-coins mr-1"></i> Input Saldo</button>
-             </div>
-          </div>`;
-      });
-      document.getElementById('proyeksi-goals-container').innerHTML = html || '<p class="text-xs text-center text-gray-400 py-4">Belum ada target aktif.</p>';
-    }
-
-    async function saveGoal() {
-      const id = document.getElementById('goal-edit-id').value;
-      const payload = { 
-        name: document.getElementById('goal-name').value, 
-        targetAmount: document.getElementById('goal-amount').value, 
-        monthlyTarget: document.getElementById('goal-monthly').value 
-      };
-      
-      if(!payload.name || !payload.targetAmount) return;
-      if (id) {
-         await fetch(`/api/goals/${id}`, { method: 'PUT', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload) });
-      } else {
-         await fetch('/api/goals', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload) });
-      }
-      
-      document.getElementById('goal-edit-id').value = '';
-      document.getElementById('btn-hapus-goal').classList.add('hidden');
-      closeAllModals(); 
-      loadProjectionsView();
-    }
-
-    function editGoalData(id, name, target, monthly) {
-       document.getElementById('goal-modal-title').innerText = "Edit Target";
-       document.getElementById('goal-edit-id').value = id;
-       document.getElementById('goal-name').value = name;
-       document.getElementById('goal-amount').value = target;
-       document.getElementById('goal-monthly').value = monthly;
-       
-       document.getElementById('btn-hapus-goal').classList.remove('hidden');
-       openModal('modal-add-goal');
-    }
-    
-    async function deleteGoalAction() {
-       const id = document.getElementById('goal-edit-id').value;
-       if(!id) return;
-       if(confirm('Yakin ingin menghapus target masa depan ini?')) {
-          await fetch(`/api/goals/${id}`, { method: 'DELETE' });
-          document.getElementById('btn-hapus-goal').classList.add('hidden');
-          closeAllModals();
-          loadProjectionsView();
-       }
-    }
-
-    function updateGoalBalance(id, current) {
-       document.getElementById('goal-update-id').value = id;
-       document.getElementById('goal-current-amount').value = current;
-       openModal('modal-update-goal');
-    }
-
-    async function saveGoalBalance() {
-       const id = document.getElementById('goal-update-id').value;
-       const amt = document.getElementById('goal-current-amount').value;
-       await fetch(`/api/goals/${id}`, { method: 'PUT', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ currentAmount: amt }) });
-       closeAllModals(); 
-       loadProjectionsView();
-    }
-
-    function runSimulation() {
-      const amount = parseFloat(document.getElementById('sim-amount').value) || 0;
-      const months = parseFloat(document.getElementById('sim-duration').value) || 0;
-      const resBox = document.getElementById('sim-result');
-      
-      if(amount <= 0 || months <= 0) { 
-        resBox.classList.add('hidden'); resBox.classList.remove('flex');
-        return; 
-      }
-      
-      const perMonth = amount / months;
-      const perWeek = perMonth / 4;
-      const perDay = perMonth / 30;
-      
-      document.getElementById('sim-res-month').innerText = formatRp(perMonth);
-      document.getElementById('sim-res-week').innerText = formatRp(perWeek);
-      document.getElementById('sim-res-day').innerText = formatRp(perDay);
-      
-      let estDate = new Date(); 
-      estDate.setMonth(estDate.getMonth() + months);
-      document.getElementById('sim-est-date').innerText = "Estimasi Selesai: " + formatDate(estDate.toISOString());
-      
-      resBox.classList.remove('hidden'); resBox.classList.add('flex');
-    }
-  </script>
-  <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/service-worker.js')
-        .then((reg) => console.log('Service Worker OK:', reg.scope))
-        .catch((err) => console.log('Service Worker Gagal:', err));
-    });
-  }
-</script>
+  <script src="localDb.js"></script>
+  <script src="app.js"></script> 
 </body>
 </html>
