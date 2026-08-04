@@ -456,9 +456,13 @@
       </div>
       <div class="mb-4">
         <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">Bahasa</p>
-        <select id="set-lang" class="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 px-4 font-bold text-sm outline-none">
+        <select id="set-lang" class="custom-select-box">
           <option value="id">Indonesia</option>
           <option value="en">English</option>
+          <option value="zh">Mandarin (中文)</option>
+          <option value="ar">Arab (العربية)</option>
+          <option value="ja">Jepang (日本語)</option>
+          <option value="ko">Korea (한국어)</option>
           <option value="su">Basa Sunda</option>
           <option value="jv">Basa Jawa</option>
         </select>
@@ -486,7 +490,7 @@
     <div class="text-center mt-8 mb-4">
        <p class="text-xs font-bold text-gray-400">Driver Management - Created by Gaska</p>
        <p class="text-[10px] text-gray-300 mb-2">Versi 1.0 (Final Release)</p>
-       <button onclick="openGlobalDetail('Changelog v1.0', '- Dashboard khusus Driver dengan grafik jam produktif.<br>- AI Analisa pendalaman data.<br>- Interaktivitas pada Laporan Pie Chart.<br>- Perbaikan estimasi Target Finansial.<br>- Dark Mode dan Multibahasa Support.')" class="text-[10px] text-grab font-bold">Lihat Yang Baru (Changelog)</button>
+       <button onclick="openChangeLogModal()" class="text-[10px] text-grab font-bold">Lihat Yang Baru (Changelog)</button>
     </div>
   </div>
 
@@ -1800,6 +1804,8 @@
     });
   }
 </script>
+
+  
     <!-- ===================================================================================== -->
   <!-- SKRIP OFFLINE ARCHITECTURE ENGINE (MIGRASI 100% SELESAI)                              -->
   <!-- ===================================================================================== -->
@@ -1812,6 +1818,30 @@
   <script src="i18nService.js"></script>
   <script src="onboardingService.js"></script>
   <script src="apiBridge.js"></script>
-  
+
+     <script>
+      function openChangeLogModal() {
+        const logs = ReportService.getChangeLog();
+        let contentHtml = `<div style="max-height: 60vh; overflow-y: auto; text-align: left; padding-right: 4px;">`;
+        
+        logs.forEach(log => {
+          contentHtml += `
+            <div style="margin-bottom: 20px; border-bottom: 1px solid #E5E7EB; padding-bottom: 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                <h4 style="margin: 0; font-size: 16px; font-weight: 700; color: #10B981;">${log.version} - ${log.title}</h4>
+                <span style="font-size: 11px; background: #E6F4EA; color: #0D9488; padding: 2px 8px; border-radius: 6px; font-weight: 600;">${log.date}</span>
+              </div>
+              <ul style="margin: 8px 0 0 16px; padding: 0; font-size: 13px; color: #4B5563; line-height: 1.5;">
+          `;
+          log.items.forEach(item => {
+            contentHtml += `<li style="margin-bottom: 4px;">${item}</li>`;
+          });
+          contentHtml += `</ul></div>`;
+        });
+        
+        contentHtml += `</div>`;
+        ModalService.showAlert("Riwayat Pembaruan (Changelog)", contentHtml);
+      }
+     </script>
 </body>
 </html>
