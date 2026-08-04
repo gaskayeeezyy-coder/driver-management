@@ -27,6 +27,9 @@ jobs:
       - name: Install NPM Dependencies
         run: npm install
 
+      - name: Sinkronisasi Capacitor (Penting!)
+        run: npx cap sync
+
       - name: Beri Izin Gradle
         working-directory: ./android
         run: chmod +x gradlew
