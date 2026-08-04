@@ -88,16 +88,23 @@ const ReportService = {
   },
 
   // Driver Dashboard (Pengganti app.get('/api/driver-dashboard'))
-  getDriverDashboard() {
+    getDriverDashboard() {
     const db = DBService.readDB();
-    const today = DBService.getLocalToday();
-    const txs = db.transactions.filter(t => t.date === today);
+    const todayStr = DBService.getLocalToday();
+    const todayTxs = (db.transactions || []).filter(t => t.date === todayStr);
+
+    let totalIncome = todayTxs.filter(t => t.type === 'in').reduce((sum, t) => sum + t.amount, 0);
+    let totalTrip = todayTxs.filter(t => t.type === 'in').length;
     
-    let stats = {
-      totalTrip: 0, tripSelesai: 0, tripBatal: 0,
-      pendapatan: 0, labaBersih: 0, totalTip: 0, pengeluaran: 0,
-      jamOnlineMins: 0, 
-      jamProduktifData: new Array(24).fill(0)
+    // Ambil data waktu online mentah (misal dari setting atau akumulasi trip), lalu format rapi
+    let rawMinutes = db.driverOnlineMinutes || 0; // atau sumber data waktu online Anda
+    let formattedOnlineTime = this.formatOnlineTime(rawMinutes);
+
+    return {
+      onlineTime: formattedOnlineTime,
+      totalIncome: totalIncome,
+      totalTrip: totalTrip,
+      target: db.target || 200000
     };
 
     let minTime = null, maxTime = null;
@@ -140,6 +147,10 @@ const ReportService = {
     if (minTime !== null && maxTime !== null && maxTime >= minTime) {
       stats.jamOnlineMins = maxTime - minTime;
     }
+      const totalMin = stats.jamOnlineMins || 0;
+    const jam = Math.floor(totalMin / 60);
+    const menit = totalMin % 60;
+    stats.formattedOnlineTime = `${jam}j ${menit}m`;
 
     let peakHour = stats.jamProduktifData.indexOf(Math.max(...stats.jamProduktifData));
     let peakVal = stats.jamProduktifData[peakHour];
@@ -360,4 +371,46 @@ const ReportService = {
       return { error: 'Format database tidak valid' }; 
     }
   }
+    // Tambahkan fungsi ini di dalam obyek ReportService di reportService.js
+  getChangeLog() {
+    return [
+      {
+        version: "v1.2.0",
+        date: "2026",
+        title: "User Experience & Personalization Update",
+        items: [
+          "Splash Screen baru yang halus dan profesional",
+          "Onboarding pengguna baru & profil kendaraan",
+          "Personalisasi Dashboard Driver & Platform",
+          "Sistem translasi multibahasa penuh (8 bahasa termasuk Sunda & Jawa)",
+          "Custom Dialog / Modal modern menggantikan popup sistem",
+          "Perbaikan bug layout Waktu Online di Dashboard Driver",
+          "Optimalisasi UI & Bug Fix menyeluruh"
+        ]
+      },
+      {
+        version: "v1.1.0",
+        date: "2025 - 2026",
+        title: "Offline Architecture & Financial Hub",
+        items: [
+          "Migrasi arsitektur 100% offline (tanpa server/Termux)",
+          "Financial Hub & Chart analitik keuangan",
+          "AI Analytics & Skor Kesehatan Keuangan",
+          "Manajemen Target & Multi Rekening / Dompet",
+          "Fitur Backup & Restore data lokal",
+          "Perbaikan sistem mutasi transaksi & reversal saldo"
+        ]
+      },
+      {
+        version: "v1.0.0",
+        date: "2025",
+        title: "Initial Release",
+        items: [
+          "Rilis pertama aplikasi Driver Management",
+          "Pencatatan trip, pemasukan, dan pengeluaran harian",
+          "Dashboard ringkasan harian ojek online"
+        ]
+      }
+    ];
+  },
 };

@@ -121,6 +121,9 @@
         status = 200; responseData = ReportService.getSettings();
       } else if (path === '/api/settings' && method === 'PUT') {
         status = 200; responseData = ReportService.updateSettings(body);
+      } else if (path === '/api/changelog' && method === 'GET') {
+        status = 200; 
+        responseData = ReportService.getChangeLog();
       }
 
       console.log(`[Bridge] 4. Eksekusi Service sukses.`);
